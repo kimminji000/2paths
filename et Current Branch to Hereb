@@ -1,0 +1,11 @@
+[33m20e6092[m[33m ([m[1;36mHEAD -> [m[1;32mminji[m[33m, [m[1;31morigin/minji[m[33m)[m HEAD@{0}: checkout: moving from main to minji
+[33m97753ba[m[33m ([m[1;32mmain[m[33m)[m HEAD@{1}: commit: input
+[33m4533aab[m HEAD@{2}: commit: gradle file
+[33m20e6092[m[33m ([m[1;36mHEAD -> [m[1;32mminji[m[33m, [m[1;31morigin/minji[m[33m)[m HEAD@{3}: reset: moving to 20e6092
+[33me740eaa[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{4}: reset: moving to HEAD@{2}
+[33m20e6092[m[33m ([m[1;36mHEAD -> [m[1;32mminji[m[33m, [m[1;31morigin/minji[m[33m)[m HEAD@{5}: reset: moving to HEAD@{2}
+[33me740eaa[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{6}: checkout: moving from master to main
+[33me740eaa[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{7}: checkout: moving from minji to master
+[33m20e6092[m[33m ([m[1;36mHEAD -> [m[1;32mminji[m[33m, [m[1;31morigin/minji[m[33m)[m HEAD@{8}: commit: first commit
+[33me740eaa[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{9}: checkout: moving from master to minji
+[33me740eaa[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{10}: commit (initial): 화면전환
