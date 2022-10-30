@@ -25,10 +25,12 @@ class InputActivity : AppCompatActivity() {
             val aUserStunum=binding.etStunum.text
             val aUserGrade=binding.etGrade.text
             var aUserField = ""
+            val aUserState=binding.etState.text
 
             if(binding.cbFlight.isChecked){
                 aUserField += "항공우주"
             }
+
             if(binding.cbSoftware.isChecked){
                 aUserField += "소프트웨어"
             }
@@ -38,6 +40,7 @@ class InputActivity : AppCompatActivity() {
                 "stunum" to aUserStunum.toString(),
                 "grade" to aUserGrade.toString(),
                 "field" to aUserField,
+                "state" to aUserState.toString(),
             )
 
             firebase.collection("user").document(aUserStunum.toString()).set(aUserdata)
