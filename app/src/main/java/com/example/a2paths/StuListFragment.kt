@@ -1,16 +1,14 @@
 package com.example.a2paths
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.a2paths.databinding.FragmentStuListBinding
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -47,5 +45,12 @@ class StuListFragment :Fragment() {
 
         return binding.root
     }
+/*
+    override fun onClick(v: View?) {
+        if (v?.parent == binding.rvStuprofile){
+            var intent = Intent(getActivity(),StuProfileActivity::class.java)
+            startActivity(intent)
+        }
+    }*/
 
 }

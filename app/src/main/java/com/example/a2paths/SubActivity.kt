@@ -8,7 +8,9 @@ class SubActivity : AppCompatActivity() {
 
     private var mBinding: ActivitySubBinding?=null
     private val binding get() =mBinding!!
+
     lateinit var mmbinding:ActivitySubBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub)
