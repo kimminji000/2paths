@@ -1,5 +1,6 @@
 package com.example.a2paths
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.a2paths.databinding.ActivityInputBinding
@@ -40,6 +41,10 @@ class InputActivity : AppCompatActivity() {
             )
 
             firebase.collection("user").document(aUserStunum.toString()).set(aUserdata)
+
+            var intent = Intent(this, SubActivity::class.java)
+            startActivity(intent)
+
         }
     }
 

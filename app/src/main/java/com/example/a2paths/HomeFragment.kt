@@ -17,7 +17,6 @@ class HomeFragment : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_home, container, false) //기존 프레그먼트연결
         mBinding = FragmentHomeBinding.inflate(inflater, container, false) //바인딩사용
 
-
         binding.btnProf.setOnClickListener {
             setFrag(0)
         }
@@ -27,11 +26,11 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
-        //return view
     }
 
     private fun setFrag(fragNum : Int) {
         val ft = childFragmentManager.beginTransaction()
+
         when(fragNum){
             0 -> {
                 ft.replace(R.id.home_frame, ProfListFragment()).commit()
@@ -44,7 +43,6 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-            // onDestroyView 에서 binding class 인스턴스 참조를 정리해주어야 한다.
             mBinding = null
             super.onDestroyView()
         }
