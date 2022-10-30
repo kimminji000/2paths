@@ -33,7 +33,9 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="홈화면"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/green1"
+            />
 
         <Button
             android:id="@+id/btn_fragement1"
@@ -43,7 +45,8 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="채팅"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/green1"/>
 
         <Button
             android:id="@+id/btn_fragement2"
@@ -53,7 +56,8 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="상담"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/green1"/>
 
         <Button
             android:id="@+id/btn_fragement3"
@@ -63,7 +67,8 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="설정"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/green1"/>
     </LinearLayout>
 
 </RelativeLayout>

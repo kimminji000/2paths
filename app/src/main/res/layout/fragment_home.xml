@@ -34,7 +34,8 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="교수진"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/orange2"  />
 
         <Button
             android:id="@+id/btn_stu"
@@ -45,7 +46,8 @@
             android:insetBottom="0dp"
             android:text="학생"
             android:layout_marginTop="10dp"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/orange2"  />
     </LinearLayout>
 
     <FrameLayout
