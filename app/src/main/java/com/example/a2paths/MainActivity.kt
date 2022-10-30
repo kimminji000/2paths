@@ -13,6 +13,12 @@ class MainActivity : AppCompatActivity() {
         //setContentView(binding.root)
         val mmbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mmbinding.root)
+
+        mmbinding.btnSignup.setOnClickListener{
+            var intent = Intent(this,InputActivity::class.java)
+            startActivity(intent)
+        }
+
         mmbinding.btnEmpty.setOnClickListener{
             var intent = Intent(this,SubActivity::class.java)
             startActivity(intent)
