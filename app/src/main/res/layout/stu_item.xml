@@ -74,10 +74,11 @@
             android:id="@+id/tv_grade2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="학년"
             android:textColor="#000000"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_grade"
             app:layout_constraintStart_toEndOf="@+id/tv_grade"
             app:layout_constraintTop_toTopOf="@+id/tv_grade"
             app:layout_constraintVertical_bias="1.0" />
@@ -86,13 +87,26 @@
             android:id="@+id/tv_stunum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="88dp"
             android:text="학번"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_name"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
             app:layout_constraintTop_toTopOf="@+id/tv_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_stunum3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="학번"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_stunum"
+            app:layout_constraintStart_toEndOf="@+id/tv_stunum"
+            app:layout_constraintTop_toTopOf="@+id/tv_stunum"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

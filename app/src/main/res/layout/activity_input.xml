@@ -24,7 +24,8 @@
             android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/man"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -63,7 +64,7 @@
             app:layout_constraintHorizontal_bias="0.182"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.602"
+            app:layout_constraintVertical_bias="0.615"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -89,10 +90,10 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.163"
+            app:layout_constraintHorizontal_bias="0.182"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_profile"
-            app:layout_constraintVertical_bias="0.737"
+            app:layout_constraintVertical_bias="0.727"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -121,7 +122,7 @@
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.866"
+            app:layout_constraintVertical_bias="0.845"
             tools:ignore="MissingConstraints" />
 
         <CheckBox
