@@ -45,12 +45,4 @@ class StuListFragment :Fragment() {
 
         return binding.root
     }
-/*
-    override fun onClick(v: View?) {
-        if (v?.parent == binding.rvStuprofile){
-            var intent = Intent(getActivity(),StuProfileActivity::class.java)
-            startActivity(intent)
-        }
-    }*/
-
 }
