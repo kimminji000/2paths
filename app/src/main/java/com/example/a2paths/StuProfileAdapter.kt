@@ -30,6 +30,7 @@ class StuProfileAdapter(val stuProfileList: ArrayList<StuProfiles>) :RecyclerVie
             val intent = Intent(holder.itemView?.context, StuProfileActivity::class.java)
             intent.putExtra("stunum", stuProfileList[position].stunum)
             startActivity(holder.itemView.context, intent, null)
+
         }
     }
 
