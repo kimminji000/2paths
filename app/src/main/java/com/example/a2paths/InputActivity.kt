@@ -32,8 +32,8 @@ class InputActivity : AppCompatActivity() {
             val email = binding.etSEmail.text.toString().trim()
             val password = binding.etSPassword.text.toString().trim()
 
-            val aUserName=binding.etName.text
-            val aUserStunum=binding.etStunum.text
+            val aUserName = binding.etName.text
+            val aUserStunum = binding.etStunum.text
             val aUserGrade=binding.etGrade.text
             var aUserField = ""
             val aUserState=binding.etState.text

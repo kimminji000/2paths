@@ -4,21 +4,21 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.a2paths.databinding.ActivityProfileBinding
+import com.example.a2paths.databinding.ActivityStuProfileBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.jar.Attributes.Name
 
-class ProfileActivity : AppCompatActivity()  {
+class StuProfileActivity : AppCompatActivity()  {
 
-    private var mBinding: ActivityProfileBinding?=null
+    private var mBinding: ActivityStuProfileBinding?=null
     private val binding get() =mBinding!!
     val firebase = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityProfileBinding.inflate(layoutInflater)
+        mBinding= ActivityStuProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val data = intent.getStringExtra("stunum")
