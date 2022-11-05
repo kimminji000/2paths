@@ -1,10 +1,13 @@
 package com.example.a2paths
 
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a2paths.databinding.ActivityProfileBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.jar.Attributes.Name
 
 class ProfileActivity : AppCompatActivity()  {
 
@@ -15,7 +18,7 @@ class ProfileActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding= ActivityProfileBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val data = intent.getStringExtra("stunum")
@@ -26,7 +29,7 @@ class ProfileActivity : AppCompatActivity()  {
                 var afound = false
 
                 if (task.isSuccessful) {
-                    for(i in task.result!!) {
+                    for (i in task.result!!) {
                         if (i.id == data.toString()) {
                             val name = i.data["name"]
                             val stunum = i.data["stunum"]
@@ -38,6 +41,13 @@ class ProfileActivity : AppCompatActivity()  {
                             binding.tvGrade.text = grade.toString()
                             binding.tvField.text = field.toString()
                             binding.tvState.text = state.toString()
+                            binding.btnChat.setOnClickListener{
+                                val intent = Intent(this, ChatActivity::class.java)
+                                intent.putExtra("name", binding.tvName.text)
+                                intent.putExtra("uId", binding.tvStunum.text)
+
+                                this.startActivity(intent)
+                            }
                             afound = true
                             break
                         }
