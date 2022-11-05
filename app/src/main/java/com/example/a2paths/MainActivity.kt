@@ -23,5 +23,10 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this,SubActivity::class.java)
             startActivity(intent)
         }
+
+        mmbinding.btnLogin.setOnClickListener{
+            var intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
