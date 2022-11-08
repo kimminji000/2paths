@@ -1,5 +1,6 @@
 package com.example.a2paths
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class StuProfileAdapter(val stuProfileList: ArrayList<StuProfiles>) :RecyclerVie
             val intent = Intent(holder.itemView?.context, StuProfileActivity::class.java)
             intent.putExtra("stunum", stuProfileList[position].stunum)
             startActivity(holder.itemView.context, intent, null)
+
         }
     }
 
