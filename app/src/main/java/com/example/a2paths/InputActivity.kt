@@ -37,8 +37,7 @@ class InputActivity : AppCompatActivity() {
             val aUserGrade=binding.etGrade.text
             var aUserField = ""
             val aUserState=binding.etState.text
-
-
+            val aUserId = FirebaseAuth.getInstance().currentUser?.uid
             if(binding.cbFlight.isChecked){
                 aUserField += "항공우주"
             }
