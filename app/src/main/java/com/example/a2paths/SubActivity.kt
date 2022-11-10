@@ -3,6 +3,7 @@ package com.example.a2paths
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.a2paths.databinding.ActivitySubBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SubActivity : AppCompatActivity() {
 
@@ -13,50 +14,29 @@ class SubActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sub)
 
-        mmbinding = ActivitySubBinding.inflate(layoutInflater)
-        val view1 = mmbinding.root
-        setContentView(view1)
-
-        //setContentView(R.layout.activity_main)
         mBinding= ActivitySubBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setFrag(0)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_frame,HomeFragment()).commit()
 
-        binding.btnFragement0.setOnClickListener {
-            setFrag(0)
-        }
-
-        binding.btnFragement1.setOnClickListener {
-            setFrag(1)
-        }
-
-        binding.btnFragement2.setOnClickListener {
-            setFrag(2)
-        }
-
-        binding.btnFragement3.setOnClickListener {
-            setFrag(3)
-        }
-    }
-
-    private fun setFrag(fragNum : Int) {
-        val ft = supportFragmentManager.beginTransaction()
-        when(fragNum){
-            0 -> {
-                ft.replace(R.id.main_frame, HomeFragment()).commit()
+        binding.bottomNavi.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.item_fragment1 -> {
+                    transaction.replace(R.id.main_frame,HomeFragment()).commit()
+                }
+                R.id.item_fragment2 -> {
+                    transaction.replace(R.id.main_frame,ChatFragment()).commit()
+                }
+                R.id.item_fragment3 -> {
+                    transaction.replace(R.id.main_frame,ConsultFragment()).commit()
+                }
+                R.id.item_fragment4 -> {
+                    transaction.replace(R.id.main_frame,SettingFragment()).commit()
+                }
             }
-            1 -> {
-                ft.replace(R.id.main_frame, ChatFragment()).commit()
-            }
-            2 -> {
-                ft.replace(R.id.main_frame, ConsultFragment()).commit()
-            }
-            3 -> {
-                ft.replace(R.id.main_frame, SettingFragment()).commit()
-            }
+            true
         }
     }
 
