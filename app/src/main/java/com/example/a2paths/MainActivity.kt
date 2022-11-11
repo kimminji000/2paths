@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import com.example.a2paths.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -28,27 +27,41 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        var actionBar : ActionBar?
-        actionBar = supportActionBar
-        actionBar?.hide()
+        val sharedPreference = getSharedPreferences("other", 0)
+        val editor = sharedPreference.edit()
+        editor.remove("email")
+        editor.remove("password")
+        editor.clear()
+        editor.commit()
 
-        binding.btnLogin.setOnClickListener{
-            val email = binding!!.etEmail.text.toString()
-            val password = binding!!.etPassword.text.toString()
-
+        val pref = getSharedPreferences("other", 0)
+        val email =pref.getString("email", "").toString()
+        if(email != ""){
+            val password =pref.getString("password", "").toString()
+            Toast.makeText(this,"자동로그인", Toast.LENGTH_SHORT).show()
             login(email,password)
         }
 
-        binding.textView4.setOnClickListener{
-            Toast.makeText(this@MainActivity, "토스트 메세지 띄우기 입니다.", Toast.LENGTH_SHORT).show()
+        binding.btnLogin.setOnClickListener{
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            if(binding.cbLogin.isChecked){
+                val sharedPreference = getSharedPreferences("other", 0)
+                val editor = sharedPreference.edit()
+                editor.putString("email", email)
+                editor.putString("password", password)
+                editor.commit()
+            }
+            login(email,password)
         }
 
         binding.textView5.setOnClickListener{
-            Toast.makeText(this@MainActivity, "토스트 메세지 띄우기 입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "지원예정중인 기능입니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.tvRegister.setOnClickListener{
-            var intent = Intent(this,InputActivity::class.java)
+            var intent = Intent(this,RegisterActivity::class.java)
             startActivity(intent)
         }
 
