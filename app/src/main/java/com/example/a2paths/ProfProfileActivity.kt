@@ -8,14 +8,15 @@ import com.google.firebase.ktx.Firebase
 
 class ProfProfileActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityProfProfileBinding?=null
-    private val binding get() =mBinding!!
+    private var mBinding: ActivityProfProfileBinding? = null
+    private val binding get() = mBinding!!
+
     val firebase = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding= ActivityProfProfileBinding.inflate(layoutInflater)
+        mBinding = ActivityProfProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val data = intent.getStringExtra("name")
@@ -23,10 +24,8 @@ class ProfProfileActivity : AppCompatActivity() {
         firebase.collection("prof")
             .get()
             .addOnCompleteListener { task ->
-                var afound = false
-
                 if (task.isSuccessful) {
-                    for(i in task.result!!) {
+                    for (i in task.result!!) {
                         if (i.id == data.toString()) {
                             val name = i.data["name"]
                             val office = i.data["office"]
@@ -36,8 +35,6 @@ class ProfProfileActivity : AppCompatActivity() {
                             binding.tvOffice.text = office.toString()
                             binding.tvMajor.text = major.toString()
                             binding.tvLink.text = link.toString()
-                            afound = true
-                            break
                         }
                     }
                 }

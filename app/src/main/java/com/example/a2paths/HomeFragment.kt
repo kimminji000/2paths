@@ -7,43 +7,64 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.a2paths.databinding.FragmentHomeBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
     private var mBinding: FragmentHomeBinding? = null
     private val binding get() = mBinding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //val view = inflater.inflate(R.layout.fragment_home, container, false) //기존 프레그먼트연결
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false) //바인딩사용
+    val firebase = Firebase.firestore
+    private val user = Firebase.auth.currentUser
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
+
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        firebase.collection("user").document(user?.email.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                binding.tvName.text = document["name"].toString()
+                binding.tvGrade.text = document["grade"].toString()
+                binding.tvNumber.text = document["number"].toString()
+                binding.tvState.text = document["state"].toString()
+
+                var field = ""
+                if (document["flight"].toString() == "true" && document["software"].toString() == "true") {
+                    field += "항공우주 소프트웨어"
+                } else {
+                    if (document["flight"].toString() == "true") {
+                        field += "항공우주"
+                    }
+                    if (document["software"].toString() == "true") {
+                        field += "소프트웨어"
+                    }
+                }
+                binding.tvField.text = field
+            }
+
+        binding.constraintLayout2.setOnClickListener {
+            val intent = Intent(activity, MyProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.btnProf.setOnClickListener {
-            setFrag(0)
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, ProfListFragment()).commit()
         }
 
         binding.btnStu.setOnClickListener {
-            setFrag(1)
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, StuListFragment()).commit()
         }
 
         return binding.root
     }
 
-    private fun setFrag(fragNum : Int) {
-        val ft = childFragmentManager.beginTransaction()
-
-        when(fragNum){
-            0 -> {
-                ft.replace(R.id.home_frame, ProfListFragment()).commit()
-            }
-            1 -> {
-                ft.replace(R.id.home_frame, StuListFragment()).commit()
-            }
-        }
-
-    }
-
     override fun onDestroyView() {
-            mBinding = null
-            super.onDestroyView()
-        }
+        mBinding = null
+        super.onDestroyView()
+    }
 }
