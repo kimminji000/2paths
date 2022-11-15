@@ -26,7 +26,6 @@ class InputActivity : AppCompatActivity() {
 
         //auth 초기화
         auth = Firebase.auth
-
         binding.btnInput.setOnClickListener {
             //데이터 저장
             val email = binding.etSEmail.text.toString().trim()
@@ -44,6 +43,7 @@ class InputActivity : AppCompatActivity() {
             if(binding.cbSoftware.isChecked){
                 aUserField += "소프트웨어"
             }
+            val aUserId = FirebaseAuth.getInstance().currentUser?.uid
 
             val aUserdata=hashMapOf(
                 "id" to email,
@@ -53,6 +53,7 @@ class InputActivity : AppCompatActivity() {
                 "grade" to aUserGrade.toString(),
                 "field" to aUserField,
                 "state" to aUserState.toString(),
+                "uid" to aUserId.toString()
             )
 
             firebase.collection("user").document(aUserStunum.toString()).set(aUserdata)

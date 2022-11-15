@@ -36,7 +36,7 @@ class StuProfileActivity : AppCompatActivity()  {
                             val grade = i.data["grade"]
                             val field = i.data["field"]
                             val state = i.data["state"]
-                            val uid = i.id
+                            val uid = i.data["uid"]
                             binding.tvName.text = name.toString()
                             binding.tvStunum.text = stunum.toString()
                             binding.tvGrade.text = grade.toString()
@@ -45,7 +45,7 @@ class StuProfileActivity : AppCompatActivity()  {
                             binding.btnChat.setOnClickListener{
                                 val intent = Intent(this, ChatActivity::class.java)
                                 intent.putExtra("name", binding.tvName.text)
-                                intent.putExtra("uId", i.id.toString())
+                                intent.putExtra("uid", uid.toString())
 
                                 this.startActivity(intent)
                             }
