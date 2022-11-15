@@ -43,7 +43,7 @@ class ChatFragment : Fragment() {
     // 뷰가 생성되었을 때
     // 프레그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_chat, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.rv_chatlist)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = RecyclerViewAdapter()
