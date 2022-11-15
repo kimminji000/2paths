@@ -3,23 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MyProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="#DCDCDC"
-        android:padding="30dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/home_frame">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
 
         <ImageView
             android:id="@+id/iv_profile"
@@ -34,22 +30,23 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:text="이름"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iv_profile"
             app:layout_constraintStart_toStartOf="@+id/iv_profile"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile"
-            app:layout_constraintVertical_bias="0.115" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
 
         <TextView
             android:id="@+id/tv_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="12dp"
             android:text="학년"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/iv_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             tools:ignore="MissingConstraints" />
@@ -61,7 +58,6 @@
             android:layout_marginStart="8dp"
             android:text="학년"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_grade"
             app:layout_constraintStart_toEndOf="@+id/tv_grade"
             app:layout_constraintTop_toTopOf="@+id/tv_grade" />
 
@@ -69,12 +65,13 @@
             android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="72dp"
             android:text="학번"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_grade1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_grade"
+            app:layout_constraintStart_toEndOf="@+id/tv_grade"
+            app:layout_constraintTop_toTopOf="@+id/tv_grade"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -84,7 +81,6 @@
             android:layout_marginStart="8dp"
             android:text="학번"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_number"
             app:layout_constraintStart_toEndOf="@+id/tv_number"
             app:layout_constraintTop_toTopOf="@+id/tv_number"
             tools:ignore="MissingConstraints" />
@@ -93,75 +89,82 @@
             android:id="@+id/tv_field2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="관심분야"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_grade"
             tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/tv_field"
+        <CheckBox
+            android:id="@+id/cb_flight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="관심분야"
+            android:text="항공우주"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_field2"
             app:layout_constraintStart_toEndOf="@+id/tv_field2"
-            app:layout_constraintTop_toTopOf="@+id/tv_field2" />
+            app:layout_constraintTop_toTopOf="@+id/tv_field2"
+            app:layout_constraintVertical_bias="0.476" />
 
-        <TextView
-            android:id="@+id/tv_state"
+        <CheckBox
+            android:id="@+id/cb_software"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:background="#ECECEC"
-            android:text="상태메시지"
+            android:layout_marginStart="8dp"
+            android:text="소프트웨어"
             android:textSize="20sp"
-            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/cb_flight"
+            app:layout_constraintStart_toEndOf="@+id/cb_flight"
+            app:layout_constraintTop_toTopOf="@+id/cb_flight" />
+
+        <EditText
+            android:id="@+id/et_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="상태메세지를 입력해 주세요."
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_field2" />
+
+        <Button
+            android:id="@+id/btn_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="수강과목 관리"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_field2"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/et_state" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="24dp"
+        android:text="저장"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btn_prof"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="교수진"
-            app:cornerRadius="0dp" />
-
-        <Button
-            android:id="@+id/btn_stu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="학생"
-            app:cornerRadius="0dp" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/home_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-    </FrameLayout>
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="취소"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_save"
+        app:layout_constraintTop_toTopOf="@+id/btn_save"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

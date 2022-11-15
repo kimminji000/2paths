@@ -65,7 +65,7 @@
             app:layout_constraintTop_toTopOf="@+id/tv_grade" />
 
         <TextView
-            android:id="@+id/tv_stunum"
+            android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="학번"
@@ -79,14 +79,14 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/tv_stunum2"
+            android:id="@+id/tv_number2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="학번"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_stunum"
-            app:layout_constraintTop_toTopOf="@+id/tv_stunum"
+            app:layout_constraintStart_toEndOf="@+id/tv_number"
+            app:layout_constraintTop_toTopOf="@+id/tv_number"
             tools:ignore="MissingConstraints" />
 
         <TextView

@@ -18,7 +18,7 @@ class MessageAdapter (private val context: Context, private val messageList: Arr
         return if(viewType == 1){ //받는 화면
             val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             ReceiveViewHolder(view)
-        }
+            }
         else { // 보내는 화면
             val view: View = LayoutInflater.from(context).inflate(R.layout.send, parent, false)
             SendViewHolder(view)

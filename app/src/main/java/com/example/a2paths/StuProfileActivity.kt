@@ -7,21 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.a2paths.databinding.ActivityStuProfileBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.util.jar.Attributes.Name
 
-class StuProfileActivity : AppCompatActivity()  {
+class StuProfileActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityStuProfileBinding?=null
-    private val binding get() =mBinding!!
+    private var mBinding: ActivityStuProfileBinding? = null
+    private val binding get() = mBinding!!
+
     val firebase = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding= ActivityStuProfileBinding.inflate(layoutInflater)
+        mBinding = ActivityStuProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = intent.getStringExtra("stunum")
+        val data = intent.getStringExtra("number")
 
         firebase.collection("user")
             .get()
@@ -30,24 +30,31 @@ class StuProfileActivity : AppCompatActivity()  {
 
                 if (task.isSuccessful) {
                     for (i in task.result!!) {
-                        if (i.id == data.toString()) {
-                            val name = i.data["name"]
-                            val stunum = i.data["stunum"]
-                            val grade = i.data["grade"]
-                            val field = i.data["field"]
-                            val state = i.data["state"]
-                            val uid = i.id
-                            binding.tvName.text = name.toString()
-                            binding.tvStunum.text = stunum.toString()
-                            binding.tvGrade.text = grade.toString()
-                            binding.tvField.text = field.toString()
-                            binding.tvState.text = state.toString()
-                            binding.btnChat.setOnClickListener{
+                        if (i.data["number"] == data.toString()) {
+                            binding.tvName.text = i.data["name"].toString()
+                            binding.tvGrade.text = i.data["grade"].toString()
+                            binding.tvNumber.text = i.data["number"].toString().substring(0 until 2)
+                            binding.tvState.text = i.data["state"].toString()
+
+                            var field = ""
+                            if (i.data["flight"].toString() == "true" && i.data["software"].toString() == "true") {
+                                field += "항공우주 소프트웨어"
+                            } else {
+                                if (i.data["flight"].toString() == "true") {
+                                    field += "항공우주"
+                                }
+                                if (i.data["software"].toString() == "true") {
+                                    field += "소프트웨어"
+                                }
+                            }
+                            binding.tvField.text = field
+
+                            binding.btnChat.setOnClickListener {
                                 val intent = Intent(this, ChatActivity::class.java)
                                 intent.putExtra("name", binding.tvName.text)
-                                intent.putExtra("uId", i.id.toString())
+                                intent.putExtra("uId", i.id)
 
-                                this.startActivity(intent)
+                                startActivity(intent)
                             }
                             afound = true
                             break
