@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2paths.databinding.FragmentStuListBinding
@@ -42,7 +43,22 @@ class StuListFragment :Fragment() {
         binding.rvStuprofile.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStuprofile.setHasFixedSize(true)
         binding.rvStuprofile.adapter = adapter
-
+        binding.svStulist.setOnQueryTextListener(searchViewTextListener)
         return binding.root
     }
+
+    var TAG = "StuListFragment"
+
+    var searchViewTextListener : SearchView.OnQueryTextListener =
+        object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.getFilter().filter(newText)
+                Log.d(TAG,"SearchView Text is changed:$newText")
+                return false
+            }
+        }
 }
