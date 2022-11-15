@@ -1,5 +1,6 @@
 package com.example.a2paths
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,8 @@ class StuProfileActivity : AppCompatActivity() {
         firebase.collection("user")
             .get()
             .addOnCompleteListener { task ->
+                var afound = false
+
                 if (task.isSuccessful) {
                     for (i in task.result!!) {
                         if (i.data["number"] == data.toString()) {
@@ -50,11 +53,15 @@ class StuProfileActivity : AppCompatActivity() {
                                 val intent = Intent(this, ChatActivity::class.java)
                                 intent.putExtra("name", binding.tvName.text)
                                 intent.putExtra("uId", i.id)
+
                                 startActivity(intent)
                             }
+                            afound = true
+                            break
                         }
                     }
                 }
             }
+
     }
 }
