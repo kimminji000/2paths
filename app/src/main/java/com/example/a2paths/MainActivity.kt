@@ -8,6 +8,8 @@ import android.widget.Toast
 import com.example.a2paths.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -16,7 +18,9 @@ class MainActivity : AppCompatActivity() {
     private var mBinding: ActivityMainBinding? = null
     private val binding get() = mBinding!!
 
+    val firebase = Firebase.firestore
     private lateinit var auth: FirebaseAuth
+    private val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,16 +74,25 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+                    firebase.collection("user").document(user?.email.toString())
+                        .get()
+                        .addOnSuccessListener { document ->
+                            val uid = document["uid"].toString()
+                            if (uid == "") {
+                                val data = hashMapOf(
+                                    "uid" to user!!.uid,
+                                )
+                                firebase.collection("user").document(user.email.toString()).set(data, SetOptions.merge())
+                            }
+                        }
+
                     val intent = Intent(this@MainActivity, SubActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                     finish()//액티비티 종료기능
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(
-                        baseContext, "로그인 실패. 다시 시도하세요.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()
                     Log.d("Login", "Error:${task.exception}")
                 }
             }//10:53
