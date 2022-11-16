@@ -130,6 +130,7 @@ class RegisterActivity : AppCompatActivity() {
             val number = binding.etNumber.text.toString()
             val grade = binding.etGrade.text.toString()
             val state = ""
+            val uid = ""
 
             val flight = if (binding.cbFlight.isChecked) {
                 "true"
@@ -152,6 +153,7 @@ class RegisterActivity : AppCompatActivity() {
                 "flight" to flight,
                 "software" to software,
                 "state" to state,
+                "uid" to uid,
             )
 
             firebase.collection("user").document(email).set(data)

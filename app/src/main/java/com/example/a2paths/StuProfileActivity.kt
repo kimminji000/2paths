@@ -1,6 +1,5 @@
 package com.example.a2paths
 
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +25,6 @@ class StuProfileActivity : AppCompatActivity() {
         firebase.collection("user")
             .get()
             .addOnCompleteListener { task ->
-                var afound = false
 
                 if (task.isSuccessful) {
                     for (i in task.result!!) {
@@ -56,7 +54,6 @@ class StuProfileActivity : AppCompatActivity() {
 
                                 startActivity(intent)
                             }
-                            afound = true
                             break
                         }
                     }
