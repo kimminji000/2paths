@@ -21,7 +21,6 @@ class StuProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val data = intent.getStringExtra("number")
-        val uid = intent.getStringExtra("uid")
 
         firebase.collection("user")
             .get()
@@ -60,6 +59,5 @@ class StuProfileActivity : AppCompatActivity() {
                     }
                 }
             }
-
     }
 }
