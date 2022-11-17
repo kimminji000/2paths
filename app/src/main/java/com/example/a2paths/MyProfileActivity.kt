@@ -60,11 +60,13 @@ class MyProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SubActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.btnCancel.setOnClickListener {
             val intent = Intent(this, SubActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

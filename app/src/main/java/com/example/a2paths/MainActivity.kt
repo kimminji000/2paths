@@ -39,7 +39,12 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        //autoLogin()
+        val pref = getSharedPreferences("other", 0)
+        val editor = pref.edit()
+        editor.clear()
+        editor.apply()
+
+        autoLogin()
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
@@ -94,22 +99,12 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_LOGIN_CODE) {
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data!!)!!
-
             if (result.isSuccess) {
                 val account = result.signInAccount
                 firebaseAuthWithGoogle(account)
-                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
-            /*
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account)
-            } catch (e: ApiException) {
-                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-            }*/
         }
     }
 
@@ -118,8 +113,19 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this, SubActivity::class.java))
-                    finish()
+                    firebase.collection("user").document(user?.email.toString())
+                        .get()
+                        .addOnSuccessListener { document ->
+                            if (document["name"] == null) {
+                                val intent = Intent(this, GoogleRegisterActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, SubActivity::class.java))
+                                finish()
+                            }
+                        }
                 } else {
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
                 }
@@ -134,8 +140,6 @@ class MainActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { document ->
                             val uid = document["uid"].toString()
-                            val intent = Intent(this, ChatActivity::class.java)
-                            intent.putExtra("uid", uid)
                             if (uid == "") {
                                 val data = hashMapOf(
                                     "uid" to user!!.uid,
@@ -154,4 +158,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
+
+//    override fun onDestroy() {
+//        mBinding = null
+//        super.onDestroy()
+//        auth.signOut()
+//        googleSignInClient?.signOut()
+//    }
 }
