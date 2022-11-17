@@ -3,15 +3,19 @@ package com.example.a2paths
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract.Contacts.Photo
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+//import com.bumptech.glide.Glide
+//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
 class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : RecyclerView.Adapter<StuProfileAdapter.CustomViewHolder>(),Filterable {
@@ -27,17 +31,10 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
 
     override fun onBindViewHolder(holder: StuProfileAdapter.CustomViewHolder, position: Int) {
 
-        /*
-
         holder.name.text = filteredstuProfileList[position].name
         holder.number.text = filteredstuProfileList[position].number.substring(0 until 2)
         holder.grade.text = filteredstuProfileList[position].grade
         holder.state.text = filteredstuProfileList[position].state
-        /*
-        holder.name.text = filteredstuProfileList[position].name
-        holder.number.text = filteredstuProfileList[position].stunum
-        holder.grade.text = filteredstuProfileList[position].grade
-        holder.state.text = filteredstuProfileList[position].state  */
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, StuProfileActivity::class.java)
@@ -52,6 +49,12 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
         val number = itemView.findViewById<TextView>(R.id.tv_number)!!
         val grade = itemView.findViewById<TextView>(R.id.tv_grade)!!
         val state = itemView.findViewById<TextView>(R.id.tv_state)!!
+        /*
+        var imageIv : ImageView = itemView.findViewById(R.id.iv_profile)!!
+
+        fun bind(photo: Photoinfo){
+            Glide.with(context).load(photo.imageUrl).into(imageIv)
+        }*/
     }
 
 
@@ -62,6 +65,7 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
     init {
         filteredstuProfileList.addAll(stuProfileList)
     }
+
     //filter
 
     override fun getFilter(): Filter {

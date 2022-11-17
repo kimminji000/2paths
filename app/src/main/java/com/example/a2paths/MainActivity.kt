@@ -82,6 +82,6 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                     Log.d("Login", "Error:${task.exception}")
                 }
-            }//10:53
+            }
     }
 }
