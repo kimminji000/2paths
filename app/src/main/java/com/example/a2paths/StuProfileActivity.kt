@@ -21,6 +21,7 @@ class StuProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val data = intent.getStringExtra("number")
+        val uid = intent.getStringExtra("uid")
 
         firebase.collection("user")
             .get()
@@ -33,6 +34,7 @@ class StuProfileActivity : AppCompatActivity() {
                             binding.tvGrade.text = i.data["grade"].toString()
                             binding.tvNumber.text = i.data["number"].toString().substring(0 until 2)
                             binding.tvState.text = i.data["state"].toString()
+                            val uid = i.data["uid"].toString()
 
                             var field = ""
                             if (i.data["flight"].toString() == "true" && i.data["software"].toString() == "true") {
@@ -50,8 +52,7 @@ class StuProfileActivity : AppCompatActivity() {
                             binding.btnChat.setOnClickListener {
                                 val intent = Intent(this, ChatActivity::class.java)
                                 intent.putExtra("name", binding.tvName.text)
-                                intent.putExtra("uId", i.id)
-
+                                intent.putExtra("uid", uid)
                                 startActivity(intent)
                             }
                             break

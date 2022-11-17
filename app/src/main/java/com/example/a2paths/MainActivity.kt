@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { document ->
                             val uid = document["uid"].toString()
+                            val intent = Intent(this, ChatActivity::class.java)
+                            intent.putExtra("uid", uid)
                             if (uid == "") {
                                 val data = hashMapOf(
                                     "uid" to user!!.uid,
