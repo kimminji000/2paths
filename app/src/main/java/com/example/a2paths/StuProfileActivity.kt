@@ -59,5 +59,9 @@ class StuProfileActivity : AppCompatActivity() {
                     }
                 }
             }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }

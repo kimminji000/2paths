@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.a2paths.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -20,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private val firebase = Firebase.firestore
     private lateinit var auth: FirebaseAuth
+    private val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -165,9 +167,22 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    firebase.collection("user").document(user?.email.toString())
+                        .get()
+                        .addOnSuccessListener { document ->
+                            val uid = document["uid"].toString()
+                            if (uid == "") {
+                                val data = hashMapOf(
+                                    "uid" to user!!.uid,
+                                )
+                                firebase.collection("user").document(user.email.toString()).set(data, SetOptions.merge())
+                            }
+                        }
+
                     Toast.makeText(this, "가입을 축하합니다", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
 
                 } else {
                     Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()

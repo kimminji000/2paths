@@ -39,10 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        val pref = getSharedPreferences("other", 0)
-        val editor = pref.edit()
-        editor.clear()
-        editor.apply()
+        deleteAuthLogin()
 
         autoLogin()
 
@@ -90,6 +87,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun deleteAuthLogin() {
+        val pref = getSharedPreferences("other", 0)
+        val editor = pref.edit()
+        editor.clear()
+        editor.apply()
+    }
+
     private fun googleLogin() {
         val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
@@ -122,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                                 finish()
                             } else {
                                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                                finishAffinity()
                                 startActivity(Intent(this, SubActivity::class.java))
                                 finish()
                             }
@@ -136,19 +141,8 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    firebase.collection("user").document(user?.email.toString())
-                        .get()
-                        .addOnSuccessListener { document ->
-                            val uid = document["uid"].toString()
-                            if (uid == "") {
-                                val data = hashMapOf(
-                                    "uid" to user!!.uid,
-                                )
-                                firebase.collection("user").document(user.email.toString()).set(data, SetOptions.merge())
-                            }
-                        }
-
                     val intent = Intent(this@MainActivity, SubActivity::class.java)
+                    finishAffinity()
                     startActivity(intent)
                     Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                     finish()

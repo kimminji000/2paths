@@ -23,6 +23,27 @@ class HomeFragment : Fragment() {
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        getMyProfile()
+
+        binding.constraintLayout2.setOnClickListener {
+            val intent = Intent(activity, MyProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnProf.setOnClickListener {
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, ProfListFragment()).commit()
+        }
+
+        binding.btnStu.setOnClickListener {
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, StuListFragment()).commit()
+        }
+
+        return binding.root
+    }
+
+    private fun getMyProfile() {
         firebase.collection("user").document(user?.email.toString())
             .get()
             .addOnSuccessListener { document ->
@@ -44,23 +65,6 @@ class HomeFragment : Fragment() {
                 }
                 binding.tvField.text = field
             }
-
-        binding.constraintLayout2.setOnClickListener {
-            val intent = Intent(activity, MyProfileActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnProf.setOnClickListener {
-            val transaction = childFragmentManager.beginTransaction()
-            transaction.replace(R.id.home_frame, ProfListFragment()).commit()
-        }
-
-        binding.btnStu.setOnClickListener {
-            val transaction = childFragmentManager.beginTransaction()
-            transaction.replace(R.id.home_frame, StuListFragment()).commit()
-        }
-
-        return binding.root
     }
 
     override fun onDestroyView() {

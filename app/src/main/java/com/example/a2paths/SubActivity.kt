@@ -1,11 +1,9 @@
 package com.example.a2paths
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.a2paths.databinding.ActivitySubBinding
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -15,7 +13,7 @@ class SubActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     val firebase = Firebase.firestore
-    private val user = Firebase.auth.currentUser
+    private var mBackWait:Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,15 @@ class SubActivity : AppCompatActivity() {
                     transaction.replace(R.id.main_frame, SettingFragment()).commit()
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            finish()
         }
     }
 

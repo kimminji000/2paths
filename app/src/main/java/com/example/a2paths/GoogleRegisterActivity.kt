@@ -86,6 +86,7 @@ class GoogleRegisterActivity : AppCompatActivity() {
             firebase.collection("user").document(user.email.toString()).set(data)
             Toast.makeText(this, "가입을 축하합니다", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SubActivity::class.java)
+            finishAffinity()
             startActivity(intent)
             finish()
         }
