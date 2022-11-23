@@ -88,7 +88,7 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
                 return results
             } else {
                 for (student in stuProfileList) {
-                    if (student.name.contains(filterString) || student.state.contains(filterString)|| student.grade.contains(filterString)) {
+                    if (student.name.contains(filterString) || student.number.contains(filterString)|| student.grade.contains(filterString)) {
                         filteredList.add(student)
                     }
                 }
