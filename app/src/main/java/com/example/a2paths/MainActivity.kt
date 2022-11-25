@@ -1,23 +1,11 @@
 package com.example.a2paths
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.example.a2paths.databinding.ActivityMainBinding
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +13,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     val firebase = Firebase.firestore
-    private lateinit var auth: FirebaseAuth
-    private val user = Firebase.auth.currentUser
-
-    private var googleSignInClient: GoogleSignInClient? = null
-    private var GOOGLE_LOGIN_CODE = 9001
+    private var mBackWait: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,126 +21,42 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_frame, HomeFragment()).commit()
 
-        deleteAuthLogin()
-
-        autoLogin()
-
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
-
-            if (binding.cbLogin.isChecked) {
-                val sharedPreference = getSharedPreferences("other", 0)
-                val editor = sharedPreference.edit()
-                editor.putString("email", email)
-                editor.putString("password", password)
-                editor.apply()
-            }
-            login(email, password)
-        }
-
-        binding.textView5.setOnClickListener {
-            Toast.makeText(this@MainActivity, "지원예정중인 기능입니다.", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.tvRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        binding.btnGoogle.setOnClickListener {
-            googleLogin()
-        }
-    }
-
-    private fun autoLogin() {
-        val pref = getSharedPreferences("other", 0)
-        val email = pref.getString("email", "").toString()
-        if (email != "") {
-            val password = pref.getString("password", "").toString()
-            Toast.makeText(this, "자동로그인", Toast.LENGTH_SHORT).show()
-            login(email, password)
-        }
-    }
-
-    private fun deleteAuthLogin() {
-        val pref = getSharedPreferences("other", 0)
-        val editor = pref.edit()
-        editor.clear()
-        editor.apply()
-    }
-
-    private fun googleLogin() {
-        val signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GOOGLE_LOGIN_CODE) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data!!)!!
-            if (result.isSuccess) {
-                val account = result.signInAccount
-                firebaseAuthWithGoogle(account)
-            } else {
-                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    firebase.collection("user").document(user?.email.toString())
-                        .get()
-                        .addOnSuccessListener { document ->
-                            if (document["name"] == null) {
-                                val intent = Intent(this, GoogleRegisterActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                                finishAffinity()
-                                startActivity(Intent(this, SubActivity::class.java))
-                                finish()
-                            }
-                        }
-                } else {
-                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
+        binding.bottomNavi.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.item_fragment1 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, HomeFragment()).commit()
+                }
+                R.id.item_fragment2 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, ChatFragment()).commit()
+                }
+                R.id.item_fragment3 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, ConsultFragment()).commit()
+                }
+                R.id.item_fragment4 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, SettingFragment()).commit()
                 }
             }
+        }
     }
 
-    private fun login(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(this@MainActivity, SubActivity::class.java)
-                    finishAffinity()
-                    startActivity(intent)
-                    Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()
-                    Log.d("Login", "Error:${task.exception}")
-                }
-            }
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - mBackWait >= 2000) {
+            mBackWait = System.currentTimeMillis()
+            Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            finish()
+        }
     }
 
-//    override fun onDestroy() {
-//        mBinding = null
-//        super.onDestroy()
-//        auth.signOut()
-//        googleSignInClient?.signOut()
-//    }
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
+    }
 }

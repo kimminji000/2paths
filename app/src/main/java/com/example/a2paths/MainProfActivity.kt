@@ -3,13 +3,13 @@ package com.example.a2paths
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.a2paths.databinding.ActivitySubBinding
+import com.example.a2paths.databinding.ActivityMainProfBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class SubActivity : AppCompatActivity() {
-
-    private var mBinding: ActivitySubBinding? = null
+class MainProfActivity : AppCompatActivity() {
+//수정필요
+    private var mBinding: ActivityMainProfBinding? = null
     private val binding get() = mBinding!!
 
     val firebase = Firebase.firestore
@@ -18,7 +18,7 @@ class SubActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivitySubBinding.inflate(layoutInflater)
+        mBinding = ActivityMainProfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val transaction = supportFragmentManager.beginTransaction()
@@ -34,7 +34,7 @@ class SubActivity : AppCompatActivity() {
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.main_frame, ChatFragment()).commit()
                 }
-                R.id.item_fragment3 -> {
+                R.id.item_fragment3 -> { //수정필요
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.main_frame, ConsultFragment()).commit()
                 }
