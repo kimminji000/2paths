@@ -27,16 +27,21 @@ class MyProfileActivity : AppCompatActivity() {
 
         getProfile()
 
+        binding.btnClass.setOnClickListener {
+            val intent = Intent(this, MyClassActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnSave.setOnClickListener {
             saveProfile()
             Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
         binding.btnCancel.setOnClickListener {
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
