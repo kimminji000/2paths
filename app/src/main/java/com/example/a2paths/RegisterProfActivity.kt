@@ -7,16 +7,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
-import com.example.a2paths.databinding.ActivityRegisterBinding
+import com.example.a2paths.databinding.ActivityRegisterProfBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterProfActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityRegisterBinding? = null
+    private var mBinding: ActivityRegisterProfBinding? = null
     private val binding get() = mBinding!!
 
     private val firebase = Firebase.firestore
@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityRegisterBinding.inflate(layoutInflater)
+        mBinding = ActivityRegisterProfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.etEmail.text.toString().trim()
             var check = false
 
-            firebase.collection("user").get().addOnSuccessListener { result ->
+            firebase.collection("prof").get().addOnSuccessListener { result ->
                 for (document in result) {
                     if (email == document["id"]) {
                         check = true
@@ -103,62 +103,24 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
-        binding.etNumber.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                if (binding.etNumber.length() < 10) {
-                    binding.tvChecknumber.setTextColor(Color.parseColor("#ff0000"))
-                } else {
-                    binding.tvChecknumber.setTextColor(Color.parseColor("#ffffff"))
-                }
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etNumber.length() < 10) {
-                    binding.tvChecknumber.setTextColor(Color.parseColor("#ff0000"))
-                } else {
-                    binding.tvChecknumber.setTextColor(Color.parseColor("#ffffff"))
-                }
-            }
-        })
-
         binding.btnNext.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val name = binding.etName.text.toString()
-            val number = binding.etNumber.text.toString()
-            val grade = binding.etGrade.text.toString()
-            val state = ""
+            val major = binding.etMajor.text.toString()
+            val link = binding.etLink.text.toString()
             val uid = ""
-
-            val flight = if (binding.cbFlight.isChecked) {
-                "true"
-            } else {
-                "false"
-            }
-
-            val software = if (binding.cbSoftware.isChecked) {
-                "true"
-            } else {
-                "false"
-            }
 
             val data = hashMapOf(
                 "id" to email,
                 "password" to password,
                 "name" to name,
-                "number" to number,
-                "grade" to grade,
-                "flight" to flight,
-                "software" to software,
-                "state" to state,
+                "major" to major,
+                "link" to link,
                 "uid" to uid,
             )
 
-            firebase.collection("user").document(email).set(data)
+            firebase.collection("prof").document(name).set(data, SetOptions.merge())
             signUp(email, password)
         }
     }
@@ -167,7 +129,7 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    firebase.collection("user").document(user?.email.toString())
+                    firebase.collection("prof").document(binding.etName.text.toString())
                         .get()
                         .addOnSuccessListener { document ->
                             val uid = document["uid"].toString()
@@ -175,7 +137,7 @@ class RegisterActivity : AppCompatActivity() {
                                 val data = hashMapOf(
                                     "uid" to user!!.uid,
                                 )
-                                firebase.collection("user").document(user.email.toString())
+                                firebase.collection("prof").document(binding.etName.text.toString())
                                     .set(data, SetOptions.merge())
                             }
                         }
@@ -188,10 +150,5 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-
-    override fun onDestroy() {
-        mBinding = null
-        super.onDestroy()
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +22,7 @@ import kotlin.collections.ArrayList
 
 class ChatFragment : Fragment() {
     companion object{
-        fun newInstance() : ChatFragment{
+                fun newInstance() : ChatFragment{
             return ChatFragment()
         }
     }
@@ -44,7 +43,7 @@ class ChatFragment : Fragment() {
     // 프레그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_chatlist)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_chatfragment)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = RecyclerViewAdapter()
 
@@ -60,7 +59,7 @@ class ChatFragment : Fragment() {
             uid = Firebase.auth.currentUser?.uid.toString()
             println(uid)
 
-            fireDatabase.child("chatroom").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
+            fireDatabase.child("chats").child("messages").orderByChild("sendId/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
 
@@ -81,7 +80,6 @@ class ChatFragment : Fragment() {
         }
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val imageView: ImageView = itemView.findViewById(R.id.iv_chat_item)
             val textView_title : TextView = itemView.findViewById(R.id.tv_chat_title)
             val textView_lastMessage : TextView = itemView.findViewById(R.id.tv_lastmessaging)
         }
@@ -95,7 +93,7 @@ class ChatFragment : Fragment() {
                     receiverName.add(ReceiveruId)
                 }
             }
-            fireDatabase.child("users").child("$ReceiveruId").addListenerForSingleValueEvent(object : ValueEventListener {
+            fireDatabase.child("messages").child("$ReceiveruId").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
 
@@ -113,7 +111,7 @@ class ChatFragment : Fragment() {
             //채팅창 선책 시 이동
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, ChatActivity::class.java)
-                intent.putExtra("receiveuId", receiverName[position])
+                intent.putExtra("uid", receiverName[position])
                 context?.startActivity(intent)
             }
         }

@@ -2,6 +2,7 @@ package com.example.a2paths
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a2paths.databinding.ActivityStuProfileBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -25,7 +26,6 @@ class StuProfileActivity : AppCompatActivity() {
         firebase.collection("user")
             .get()
             .addOnCompleteListener { task ->
-
                 if (task.isSuccessful) {
                     for (i in task.result!!) {
                         if (i.data["number"] == data.toString()) {
@@ -33,6 +33,7 @@ class StuProfileActivity : AppCompatActivity() {
                             binding.tvGrade.text = i.data["grade"].toString()
                             binding.tvNumber.text = i.data["number"].toString().substring(0 until 2)
                             binding.tvState.text = i.data["state"].toString()
+                            val email = i.data["id"].toString()
                             val uid = i.data["uid"].toString()
 
                             var field = ""
@@ -47,6 +48,13 @@ class StuProfileActivity : AppCompatActivity() {
                                 }
                             }
                             binding.tvField.text = field
+
+                            binding.btnClass.setOnClickListener {
+                                val intent = Intent(this, ClassActivity::class.java)
+                                Toast.makeText(this, email, Toast.LENGTH_SHORT).show()
+                                intent.putExtra("email", email)
+                                startActivity(intent)
+                            }
 
                             binding.btnChat.setOnClickListener {
                                 val intent = Intent(this, ChatActivity::class.java)

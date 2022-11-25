@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2paths.databinding.ActivityChatBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
@@ -37,8 +40,12 @@ class ChatActivity : AppCompatActivity() {
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.chatRecyclerView.adapter = messageAdapter
 
-        //넘어온 데이터 변수에 담기
+        //메세지를 보낸 시간
+        val time = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+        val curTime = dateFormat.format(Date(time)).toString()
 
+        //넘어온 데이터 변수에 담기
         receiverName = intent.getStringExtra("name").toString()
         receiveruId = intent.getStringExtra("uid").toString()
 
@@ -58,9 +65,9 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.title = receiverName
 
         //메시지 전송 버튼 이벤트
-        binding.btnSend.setOnClickListener{
+        binding.btnSend.setOnClickListener {
             val message = binding.etMessage.text.toString()
-            val messageObject = Message(message, senderUid)
+            val messageObject = Message(message, senderUid, curTime, receiverName)
             //데어터 저장
             mDbRef.child("chats").child(senderRoom).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
@@ -73,7 +80,7 @@ class ChatActivity : AppCompatActivity() {
         }
         //메시지 가져오기
         mDbRef.child("chats").child(senderRoom).child("messages")
-            .addValueEventListener(object: ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messageList.clear()
 
@@ -85,6 +92,7 @@ class ChatActivity : AppCompatActivity() {
                     messageAdapter.notifyDataSetChanged()
 
                 }
+
                 override fun onCancelled(error: DatabaseError) {
 
                 }
