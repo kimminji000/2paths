@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 val account = result.signInAccount
                 firebaseAuthWithGoogle(account)
             } else {
-                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "로그인 실패*", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -153,10 +153,10 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-//    override fun onDestroy() {
-//        mBinding = null
-//        super.onDestroy()
-//        auth.signOut()
-//        googleSignInClient?.signOut()
-//    }
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
+        auth.signOut()
+        googleSignInClient?.signOut()
+    }
 }

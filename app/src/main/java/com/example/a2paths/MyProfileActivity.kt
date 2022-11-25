@@ -51,7 +51,8 @@ class MyProfileActivity : AppCompatActivity() {
                 binding.tvNumber.text = document["number"].toString()
                 binding.cbFlight.isChecked = document["flight"].toString() == "true"
                 binding.cbSoftware.isChecked = document["software"].toString() == "true"
-                binding.etState.text = Editable.Factory.getInstance().newEditable(document["state"].toString())
+                binding.etState.text =
+                    Editable.Factory.getInstance().newEditable(document["state"].toString())
             }
     }
 
