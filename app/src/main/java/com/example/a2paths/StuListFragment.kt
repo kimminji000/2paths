@@ -62,7 +62,7 @@ class StuListFragment : Fragment() {
 
     var tagStuList = "StuListFragment"
 
-    //서치뷰 리스너(검색 필터)
+    //서치뷰 리스너
     var searchViewTextListener: SearchView.OnQueryTextListener =
         object : SearchView.OnQueryTextListener {
             //검색버튼을 누를 때 호출(검색 버튼이 없으니 사용하지 않음)
