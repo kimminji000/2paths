@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //뒤로가기
     override fun onBackPressed() {
         if (System.currentTimeMillis() - mBackWait >= 2000) {
             mBackWait = System.currentTimeMillis()

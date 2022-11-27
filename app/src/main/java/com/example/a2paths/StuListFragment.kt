@@ -20,7 +20,7 @@ class StuListFragment : Fragment() {
     val firebase = Firebase.firestore
     private val user = Firebase.auth.currentUser
     private val itemList = arrayListOf<StuProfiles>()
-    private val adapter = StuProfileAdapter(itemList)
+    private val adapter = StuProfileAdapter(itemList) //학생 리스트를 보여주기 위한 어댑터
     private val filterAdapter = StuFilterAdapter(itemList)  //서치뷰 사용하는 경우의 필터 어댑터
 
     @SuppressLint("NotifyDataSetChanged")
@@ -54,7 +54,7 @@ class StuListFragment : Fragment() {
 
         binding.rvStuprofile.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStuprofile.setHasFixedSize(true)
-        binding.rvStuprofile.adapter = adapter
+        binding.rvStuprofile.adapter = adapter //학생 리스트 어댑터 연결
         binding.svStulist.setOnQueryTextListener(searchViewTextListener)  //서치뷰 리스너 호출
 
         return binding.root
@@ -62,7 +62,7 @@ class StuListFragment : Fragment() {
 
     var tagStuList = "StuListFragment"
 
-    //서치뷰 리스너(검색 필터)
+    //서치뷰 리스너
     var searchViewTextListener: SearchView.OnQueryTextListener =
         object : SearchView.OnQueryTextListener {
             //검색버튼을 누를 때 호출(검색 버튼이 없으니 사용하지 않음)
