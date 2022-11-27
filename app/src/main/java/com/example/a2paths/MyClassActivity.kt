@@ -83,7 +83,7 @@ class MyClassActivity : AppCompatActivity() {
         }
     }
 
-    private fun getClass() {
+    private fun getClass() { //내 수강과목 가져오기
         firebase.collection(user?.email.toString())
             .get()
             .addOnSuccessListener { result ->
