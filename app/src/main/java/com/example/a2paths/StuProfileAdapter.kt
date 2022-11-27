@@ -1,9 +1,7 @@
 package com.example.a2paths
 
 import android.annotation.SuppressLint
-//import android.content.Context
 import android.content.Intent
-//import android.provider.ContactsContract.Contacts.Photo
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +12,20 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-//import com.bumptech.glide.Glide
-//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
+
 
 
 class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : RecyclerView.Adapter<StuProfileAdapter.CustomViewHolder>(),Filterable {
-    var TAG = "StuProfileAdapter"
-    val filteredstuProfileList = ArrayList<StuProfiles>()   //필터링된 학생 데이터 리스트
-    var itemFilter = ItemFilter()
+
+    var tag = "StuProfileAdapter"
+
+    var filteredStuProfileList = ArrayList<StuProfiles>()   //필터링된 학생 데이터 리스트
+    var itemFilter = ItemFilter()    //필터 결과
 
     init {
-        filteredstuProfileList.addAll(stuProfileList)
+        for(stuUser in stuProfileList){
+            filteredStuProfileList.add(stuUser)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -33,21 +34,19 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
     }
 
     override fun getItemCount(): Int {
-        return filteredstuProfileList.size
+        return stuProfileList.size
     }
 
-    override fun onBindViewHolder(holder: StuProfileAdapter.CustomViewHolder, position: Int) {
-
-        holder.name.text = filteredstuProfileList[position].name
-        holder.number.text = filteredstuProfileList[position].number.substring(3 until 5)
-        holder.grade.text = filteredstuProfileList[position].grade
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {  //StuProfileAdapter.
+        holder.name.text = stuProfileList[position].name
+        holder.number.text = stuProfileList[position].number.substring(3 until 5)
+        holder.grade.text = stuProfileList[position].grade
         holder.state.text = stuProfileList[position].state
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, StuProfileActivity::class.java)
             intent.putExtra("number", stuProfileList[position].number)
             startActivity(holder.itemView.context, intent, null)
-
         }
     }
 
@@ -64,22 +63,23 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
         return itemFilter
     }
 
-    //검색 필터 수행
+    //검색 필터 수행, 필터를 상속받는 클래스
+    @Suppress("UNCHECKED_CAST")
     inner class ItemFilter : Filter() {
         override fun performFiltering(charSequence: CharSequence?): FilterResults {
             val filterString = charSequence.toString()
-            var results = FilterResults()
-            Log.d(TAG, "charSequence : $charSequence")
+            val results = FilterResults()
+            Log.d(tag, "charSequence : $charSequence")
 
-            //검색 내용이 없을 떄는 원본배열 복제
-            val filteredList = ArrayList<StuProfiles>() //: ArrayList<StuProfiles>
+            //검색이 필요없을 경우를 위해 원본배열 복제
+            val filteredList: ArrayList<StuProfiles> = ArrayList<StuProfiles>() //: ArrayList<StuProfiles>
             //공백을 제외하고 아무 값이 없을 경우엔 원본 배열 리턴
-            if (filterString.trim().isEmpty()) {
+            if (filterString.trim{it <= ' '}.isEmpty()) {
                 results.values = stuProfileList
                 results.count = stuProfileList.size
 
                 return results
-            } else {
+            } else { //검색 글자가 있는 경우 해당되는 이름/학번/학년으로 검색
                 for (student in stuProfileList) {
                     if (student.name.contains(filterString) || student.number.substring(3 until 5).contains(filterString)|| student.grade.contains(filterString)) {
                         filteredList.add(student)
@@ -96,8 +96,8 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
 
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            filteredstuProfileList.clear()
-            filteredstuProfileList.addAll(results!!.values as Collection<StuProfiles>)  //as ArrayList<StuProfiles>
+            filteredStuProfileList.clear()
+            filteredStuProfileList.addAll(results!!.values as ArrayList<StuProfiles>)  //as ArrayList<StuProfiles>
             notifyDataSetChanged()
         }
     }
