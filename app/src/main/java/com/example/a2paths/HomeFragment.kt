@@ -19,10 +19,31 @@ class HomeFragment : Fragment() {
     val firebase = Firebase.firestore
     private val user = Firebase.auth.currentUser
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        getMyProfile()
+
+        binding.constraintLayout2.setOnClickListener {
+            val intent = Intent(activity, MyProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnProf.setOnClickListener {
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, ProfListFragment()).commit()
+        }
+
+        binding.btnStu.setOnClickListener {
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.home_frame, StuListFragment()).commit()
+        }
+
+        return binding.root
+    }
+
+    private fun getMyProfile() { //내 프로필 가져오기
         firebase.collection("user").document(user?.email.toString())
             .get()
             .addOnSuccessListener { document ->
@@ -44,23 +65,6 @@ class HomeFragment : Fragment() {
                 }
                 binding.tvField.text = field
             }
-
-        binding.constraintLayout2.setOnClickListener {
-            val intent = Intent(activity, MyProfileActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnProf.setOnClickListener {
-            val transaction = childFragmentManager.beginTransaction()
-            transaction.replace(R.id.home_frame, ProfListFragment()).commit()
-        }
-
-        binding.btnStu.setOnClickListener {
-            val transaction = childFragmentManager.beginTransaction()
-            transaction.replace(R.id.home_frame, StuListFragment()).commit()
-        }
-
-        return binding.root
     }
 
     override fun onDestroyView() {

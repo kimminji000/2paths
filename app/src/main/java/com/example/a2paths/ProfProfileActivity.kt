@@ -19,6 +19,10 @@ class ProfProfileActivity : AppCompatActivity() {
         mBinding = ActivityProfProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getProfile()
+    }
+
+    private fun getProfile() {
         val data = intent.getStringExtra("name")
 
         firebase.collection("prof")

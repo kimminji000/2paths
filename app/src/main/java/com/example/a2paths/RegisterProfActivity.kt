@@ -31,7 +31,7 @@ class RegisterProfActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        binding.btnCheck.setOnClickListener {
+        binding.btnCheck.setOnClickListener { //메일주소 중복 확인
             val email = binding.etEmail.text.toString().trim()
             var check = false
 
@@ -51,7 +51,7 @@ class RegisterProfActivity : AppCompatActivity() {
             }
         }
 
-        binding.etPassword.addTextChangedListener(object : TextWatcher {
+        binding.etPassword.addTextChangedListener(object : TextWatcher { //비밀번호 일치여부 확인
             override fun afterTextChanged(p0: Editable?) {
                 if (binding.etPassword.text.toString().trim() == binding.etPassword2.text.toString().trim()) {
                     binding.tvCheckpassword.text = "비밀번호가 일치합니다."
@@ -77,7 +77,7 @@ class RegisterProfActivity : AppCompatActivity() {
             }
         })
 
-        binding.etPassword2.addTextChangedListener(object : TextWatcher {
+        binding.etPassword2.addTextChangedListener(object : TextWatcher { //비밀번호 일치여부 확인
             override fun afterTextChanged(p0: Editable?) {
                 if (binding.etPassword.text.toString().trim() == binding.etPassword2.text.toString().trim()) {
                     binding.tvCheckpassword.text = "비밀번호가 일치합니다."
@@ -125,7 +125,7 @@ class RegisterProfActivity : AppCompatActivity() {
         }
     }
 
-    private fun signUp(email: String, password: String) {
+    private fun signUp(email: String, password: String) { //교수진 회원가입
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
