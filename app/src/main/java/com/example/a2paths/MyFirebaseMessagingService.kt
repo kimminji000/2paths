@@ -23,7 +23,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         sendRegistrationToServer(token)
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) { //메세지 수신
+    //메세지 수신
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
 
         if (remoteMessage.data.isNotEmpty()) {

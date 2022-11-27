@@ -110,7 +110,7 @@ class RegisterProfActivity : AppCompatActivity() {
             val major = binding.etMajor.text.toString()
             val link = binding.etLink.text.toString()
             val uid = ""
-
+            //DB에서 저장 및 관리되는 유저(교수) 데이터
             val data = hashMapOf(
                 "id" to email,
                 "password" to password,

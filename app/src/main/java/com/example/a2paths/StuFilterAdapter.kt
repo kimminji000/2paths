@@ -88,6 +88,7 @@ class StuFilterAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Rec
                     }
                 }
             }
+            //필터링된(검색) 결과 리턴
             results.values = filteredList
             results.count = filteredList.size
 

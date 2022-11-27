@@ -145,7 +145,7 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 "false"
             }
-
+            // DB에서 저장 및 관리되는 유저(학생) 데이터
             val data = hashMapOf(
                 "id" to email,
                 "password" to password,
