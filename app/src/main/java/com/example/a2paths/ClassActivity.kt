@@ -29,6 +29,7 @@ class ClassActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvClass.layoutManager = LinearLayoutManager(this)
+        binding.rvClass.setHasFixedSize(true)
         binding.rvClass.adapter = RecyclerViewAdapter(itemList)
 
         binding.btnCancel.setOnClickListener {
@@ -36,10 +37,10 @@ class ClassActivity : AppCompatActivity() {
         }
     }
 
-    inner class RecyclerViewAdapter(private val className: ArrayList<ClassName>) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    inner class RecyclerViewAdapter(private val className: ArrayList<ClassName>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         val data = intent.getStringExtra("email")
+
         init {
             firebase.collection(data.toString())
                 .get()

@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a2paths.databinding.ActivityMyClassBinding
@@ -20,18 +20,22 @@ class MyClassActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     val firebase = Firebase.firestore
-    private val itemList = arrayListOf<ClassName>()
     private val user = Firebase.auth.currentUser
+    private val itemList = arrayListOf<ClassName>()
+    private val adapter = ClassAdapter(itemList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 
         mBinding = ActivityMyClassBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.rvClass.layoutManager = LinearLayoutManager(this)
-        binding.rvClass.adapter = RecyclerViewAdapter(itemList)
+        binding.rvClass.setHasFixedSize(true)
+        binding.rvClass.adapter = adapter
+
+        getClass()
 
         binding.btnCancel.setOnClickListener {
             onBackPressed()
@@ -42,6 +46,10 @@ class MyClassActivity : AppCompatActivity() {
                 "name" to binding.etClass.text.toString(),
             )
             firebase.collection(user?.email.toString()).document(binding.etClass.text.toString()).set(data)
+            binding.etClass.text = null
+            Toast.makeText(this, "수강과목이 추가되었습니다.", Toast.LENGTH_SHORT).show()
+
+            getClass()
         }
 
         binding.btnDelete.setOnClickListener {
@@ -49,40 +57,44 @@ class MyClassActivity : AppCompatActivity() {
         }
     }
 
-    inner class RecyclerViewAdapter(private val className: ArrayList<ClassName>) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    inner class ClassAdapter(private val className: ArrayList<ClassName>) : RecyclerView.Adapter<ClassAdapter.CustomViewHolder>() {
 
-        init {
-            firebase.collection(user?.email.toString())
-                .get()
-                .addOnSuccessListener { result ->
-                    itemList.clear()
-                    for (document in result) {
-                        val item = ClassName(
-                            document["name"] as String
-                        )
-                        itemList.add(item)
-                    }
-                    notifyDataSetChanged()
-                }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.class_item, parent, false)
-            return ViewHolder(view)
+            return CustomViewHolder(view)
         }
 
         override fun getItemCount(): Int {
             return className.size
         }
 
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val name = itemView.findViewById<TextView>(R.id.tv_name)!!
         }
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            var viewHolder = (holder as ViewHolder).itemView
+        override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             holder.name.text = className[position].name
+
+            holder.itemView.setOnClickListener {
+                //className[position].name
+                //Toast.makeText(this, "수강과목이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                //notifyItemRemoved(position)
+            }
         }
+    }
+
+    private fun getClass() {
+        firebase.collection(user?.email.toString())
+            .get()
+            .addOnSuccessListener { result ->
+                itemList.clear()
+                for (document in result) {
+                    val item = ClassName(
+                        document["name"] as String
+                    )
+                    itemList.add(item)
+                }
+                adapter.notifyDataSetChanged()
+            }
     }
 }
