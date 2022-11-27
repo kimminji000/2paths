@@ -21,6 +21,7 @@ class StuListFragment : Fragment() {
     private val user = Firebase.auth.currentUser
     private val itemList = arrayListOf<StuProfiles>()
     private val adapter = StuProfileAdapter(itemList)
+    private val filterAdapter = StuFilterAdapter(itemList)  //서치뷰 사용하는 경우의 필터 어댑터
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -54,7 +55,7 @@ class StuListFragment : Fragment() {
         binding.rvStuprofile.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStuprofile.setHasFixedSize(true)
         binding.rvStuprofile.adapter = adapter
-        binding.svStulist.setOnQueryTextListener(searchViewTextListener)
+        binding.svStulist.setOnQueryTextListener(searchViewTextListener)  //서치뷰 리스너 호출
 
         return binding.root
     }
@@ -71,7 +72,8 @@ class StuListFragment : Fragment() {
             // 서치뷰에 문자를 입력하거나 수정할 때 호출
             override fun onQueryTextChange(newText: String?): Boolean {
                 if(newText != null){
-                    adapter.getFilter().filter(newText)
+                    binding.rvStuprofile.adapter = filterAdapter   //필터 어댑터 연결
+                    filterAdapter.getFilter().filter(newText)
                     Log.d(tagStuList, "SearchView Text is changed:$newText")
                 }
                 return false
