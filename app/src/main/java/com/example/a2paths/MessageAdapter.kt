@@ -13,23 +13,23 @@ import kotlin.collections.ArrayList
 class MessageAdapter (private val context: Context, private val messageList: ArrayList<Message>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    private val receive = 1 //받는 타입
-    private val send = 2 //보내는 타입
+    // 받는 타입을 1 보내는 타입을 2 로 구분하여 View 객체를 받아오기
+    private val receive = 1
+    private val send = 2
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if(viewType == 1){ //받는 화면
+        return if(viewType == 1){
             val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             ReceiveViewHolder(view)
             }
-        else { // 보내는 화면
+        else {
             val view: View = LayoutInflater.from(context).inflate(R.layout.send, parent, false)
             SendViewHolder(view)
         }
     }
 
+    //View와 데이터 연결
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        //현재 메시지
         val currentMessage = messageList[position]
-        //보내는 데이터
         if(holder.javaClass == SendViewHolder::class.java){
             val viewHolder = holder as SendViewHolder
             viewHolder.sendMessage.text = currentMessage.message
@@ -49,7 +49,6 @@ class MessageAdapter (private val context: Context, private val messageList: Arr
 
     override fun getItemViewType(position: Int): Int {
 
-        //메시지 값
         val currentMessage = messageList[position]
 
         return if(FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.sendId)) {
@@ -60,15 +59,14 @@ class MessageAdapter (private val context: Context, private val messageList: Arr
 
 
     }
-
-    //보낸 쪽
+    // 보낸쪽 View를 전달받아서 객체 생성
     class SendViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val sendMessage: TextView = itemView.findViewById(R.id.tv_send_message)
         val sendTime: TextView = itemView.findViewById(R.id.tv_send_time)
 
     }
 
-    //받는 쪽
+    // 받는쪽 View를 전달받아서 객체 생성
     class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val receiveName: TextView = itemView.findViewById(R.id.tv_receive_name)
         val receiveMessage: TextView = itemView.findViewById(R.id.tv_receive_message)

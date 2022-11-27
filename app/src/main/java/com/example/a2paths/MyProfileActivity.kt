@@ -47,8 +47,7 @@ class MyProfileActivity : AppCompatActivity() {
         }
     }
 
-    //프로필 불러오기
-    private fun getProfile() {
+    private fun getProfile() { //프로필 가져오기
         firebase.collection("user").document(user?.email.toString())
             .get()
             .addOnSuccessListener { document ->
@@ -61,8 +60,7 @@ class MyProfileActivity : AppCompatActivity() {
             }
     }
 
-    //프로필 저장
-    private fun saveProfile() {
+    private fun saveProfile() { //프로필 저장
         val flight = if (binding.cbFlight.isChecked) {
             "true"
         } else {
