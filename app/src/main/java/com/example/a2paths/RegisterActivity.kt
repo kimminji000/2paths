@@ -162,7 +162,7 @@ class RegisterActivity : AppCompatActivity() {
             signUp(email, password)
         }
     }
-
+    //기본 회원가입
     private fun signUp(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
