@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
-import com.example.a2paths.databinding.ActivityGoogleRegisterBinding
+import com.example.a2paths.databinding.ActivityRegisterGoogleBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class GoogleRegisterActivity : AppCompatActivity() {
+class RegisterGoogleActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityGoogleRegisterBinding? = null
+    private var mBinding: ActivityRegisterGoogleBinding? = null
     private val binding get() = mBinding!!
 
     private val firebase = Firebase.firestore
@@ -25,7 +25,7 @@ class GoogleRegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityGoogleRegisterBinding.inflate(layoutInflater)
+        mBinding = ActivityRegisterGoogleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
@@ -85,7 +85,7 @@ class GoogleRegisterActivity : AppCompatActivity() {
 
             firebase.collection("user").document(user.email.toString()).set(data)
             Toast.makeText(this, "가입을 축하합니다", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             finishAffinity()
             startActivity(intent)
             finish()

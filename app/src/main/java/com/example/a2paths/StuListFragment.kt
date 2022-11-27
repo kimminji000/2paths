@@ -23,7 +23,11 @@ class StuListFragment : Fragment() {
     private val itemList = arrayListOf<StuProfiles>()
     private val adapter = StuProfileAdapter(itemList)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         mBinding = FragmentStuListBinding.inflate(inflater, container, false)
 
@@ -51,21 +55,26 @@ class StuListFragment : Fragment() {
         binding.rvStuprofile.setHasFixedSize(true)
         binding.rvStuprofile.adapter = adapter
         binding.svStulist.setOnQueryTextListener(searchViewTextListener)
+
         return binding.root
     }
 
     var TAG = "StuListFragment"
 
-    var searchViewTextListener : SearchView.OnQueryTextListener =
-        object:SearchView.OnQueryTextListener{
+    //서치뷰 리스너
+    var searchViewTextListener: SearchView.OnQueryTextListener =
+        object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.getFilter().filter(newText)
-                Log.d(TAG,"SearchView Text is changed:$newText")
-                return false
+                if(newText != null){
+                    adapter.getFilter().filter(newText)
+                    Log.d(TAG, "SearchView Text is changed:$newText")
+                }
+                return true
             }
         }
-}
+
+}//https://blog.naver.com/joymrk/222381231367

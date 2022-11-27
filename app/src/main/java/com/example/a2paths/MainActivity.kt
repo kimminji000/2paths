@@ -1,6 +1,5 @@
 package com.example.a2paths
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +7,7 @@ import android.widget.Toast
 import com.example.a2paths.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
     private var mBinding: ActivityMainBinding? = null
     private val binding get() = mBinding!!
 
-    private lateinit var auth: FirebaseAuth
+    val firebase = Firebase.firestore
+    private var mBackWait: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,64 +25,42 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_frame, HomeFragment()).commit()
 
-        val pref = getSharedPreferences("other", 0)
-        val email = pref.getString("email", "").toString()
-        if (email != "") {
-            val password = pref.getString("password", "").toString()
-            Toast.makeText(this, "자동로그인", Toast.LENGTH_SHORT).show()
-            login(email, password)
-        }
-
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
-
-            if (binding.cbLogin.isChecked) {
-                val sharedPreference = getSharedPreferences("other", 0)
-                val editor = sharedPreference.edit()
-                editor.putString("email", email)
-                editor.putString("password", password)
-                editor.apply()
+        binding.bottomNavi.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.item_fragment1 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, HomeFragment()).commit()
+                }
+                R.id.item_fragment2 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, ChatFragment()).commit()
+                }
+                R.id.item_fragment3 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, ConsultFragment()).commit()
+                }
+                R.id.item_fragment4 -> {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frame, SettingFragment()).commit()
+                }
             }
-
-            login(email, password)
-        }
-
-        binding.textView5.setOnClickListener {
-            Toast.makeText(this@MainActivity, "지원예정중인 기능입니다.", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.tvRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnGoogle.setOnClickListener {
-            val intent = Intent(this, SubActivity::class.java)
-            startActivity(intent)
         }
     }
 
-    //로그인함수
-    private fun login(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val intent = Intent(this@MainActivity, SubActivity::class.java)
-                    startActivity(intent)
-                    Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                    finish()//액티비티 종료기능
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(
-                        baseContext, "로그인 실패. 다시 시도하세요.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.d("Login", "Error:${task.exception}")
-                }
-            }
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - mBackWait >= 2000) {
+            mBackWait = System.currentTimeMillis()
+            Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            finish()
+        }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }
