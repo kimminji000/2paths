@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
+    // 구글로그인
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential)
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
+   // 기본로그인
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
