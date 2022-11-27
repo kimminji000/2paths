@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        //deleteAuthLogin()
+        deleteAuthLogin()
 
         autoLogin()
 
