@@ -44,7 +44,7 @@ class StuFilterAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Rec
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.name.text = filteredStuProfileList[position].name
-        holder.number.text = filteredStuProfileList[position].number.substring(3 until 5)
+        holder.number.text = filteredStuProfileList[position].number.substring(0 until 2)
         holder.grade.text = filteredStuProfileList[position].grade
         holder.state.text = filteredStuProfileList[position].state
 
@@ -83,7 +83,7 @@ class StuFilterAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Rec
                 return results
             } else {    //검색 글자가 있는 경우 해당되는 이름/학번/학년으로 검색
                 for (student in stuProfileList) {
-                    if (student.name.contains(filterString) || student.number.substring(3 until 5).contains(filterString)|| student.grade.contains(filterString)) {
+                    if (student.name.contains(filterString) || student.number.substring(0 until 2).contains(filterString)|| student.grade.contains(filterString)) {
                         filteredList.add(student)
                     }
                 }

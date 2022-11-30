@@ -58,6 +58,12 @@ class ChatActivity : AppCompatActivity() {
         binding.btnSend.setOnClickListener {
             val message = binding.etMessage.text.toString()
             val messageObject = Message(message, senderUid, receiveruId, curTime, receiverName)
+            val chatList = ChatList()
+
+            chatList.users.put(senderUid.toString(), true)
+            chatList.users.put(receiveruId, true)
+
+            val comment = ChatList.Comment(senderUid, message, curTime)
 
             // 데이터 저장 chat-> senderRoom -> messages로 넣기
             mDbRef.child("chats").child(senderRoom).child("messages").push()
