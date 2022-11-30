@@ -19,7 +19,7 @@ class HomeFragment : Fragment() {
     val firebase = Firebase.firestore
     private val user = Firebase.auth.currentUser
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun getMyProfile() {
+    private fun getMyProfile() { //내 프로필 가져오기
         firebase.collection("user").document(user?.email.toString())
             .get()
             .addOnSuccessListener { document ->

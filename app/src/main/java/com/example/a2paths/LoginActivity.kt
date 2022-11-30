@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private val user = Firebase.auth.currentUser
 
     private var googleSignInClient: GoogleSignInClient? = null
-    private var GOOGLE_LOGIN_CODE = 9001
+    private var googleLoginCode = 9001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        //deleteAuthLogin()
+        deleteAuthLogin()
 
         autoLogin()
 
@@ -81,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun autoLogin() {
+    private fun autoLogin() { //자동로그인
         val pref = getSharedPreferences("other", 0)
         val email = pref.getString("email", "").toString()
         if (email != "") {
@@ -91,21 +91,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteAuthLogin() {
+    private fun deleteAuthLogin() { //자동로그인 지우기
         val pref = getSharedPreferences("other", 0)
         val editor = pref.edit()
         editor.clear()
         editor.apply()
     }
 
-    private fun googleLogin() {
+    private fun googleLogin() { //구글로그인
         val signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
+        startActivityForResult(signInIntent, googleLoginCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GOOGLE_LOGIN_CODE) {
+        if (requestCode == googleLoginCode) {
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data!!)!!
             if (result.isSuccess) {
                 val account = result.signInAccount
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
+   // 기본로그인
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
