@@ -49,20 +49,22 @@ class ChatFragment : Fragment() {
     }
 
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>(){
-        private val chatList = ArrayList<Message>()
+        private val chatList = ArrayList<ChatList>()
         private var uid : String? = null
         private val receiverUser : ArrayList<String> = arrayListOf()
 
         init{
             uid = Firebase.auth.currentUser?.uid.toString()
-            fireDatabase.child("chats").child("messages").orderByChild("sendId/$uid").equalTo(true).addListenerForSingleValueEvent(object :  ValueEventListener{
+            // 불러오는 과정에서 데이터를 어떻게 가져오는게 좋을까나...
+            fireDatabase.child("chats").child("messages").orderByChild("sendId").equalTo(true)
+                .addValueEventListener(object :  ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     chatList.clear()
                     for (data in snapshot.children) {
-                        chatList.add(data.getValue<Message>()!!)
+                        chatList.add(data.getValue<ChatList>()!!)
                         println(data)
                     }
                     notifyDataSetChanged()
@@ -82,7 +84,7 @@ class ChatFragment : Fragment() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             var ReceiveruId: String? = null
             //채팅방에 있는 유저 모두 체크
-            for (user in chatList[position].sendId.toString()) {
+            for (user in chatList[position].users.keys) {
                 if (user != uid) {
                     ReceiveruId = user
                     receiverUser.add(ReceiveruId)
