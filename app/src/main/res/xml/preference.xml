@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="sound"
+        android:title="소리">
+    </SwitchPreference>
+
+<!--Single Choice : -->
+    <ListPreference
+        android:key="fontsize"
+        android:title="글자크기"
+        android:summary="원하는 글자 크기를 체크하세요"
+        android:entries="@array/fontsize"
+        android:entryValues="@array/fontsize">
+    </ListPreference>
+
+    <ListPreference
+        android:key="theme"
+        android:title="테마변경"
+        android:summary="원하는 테마를 선택하세요"
+        android:entries="@array/theme"
+        android:entryValues="@array/theme">
+    </ListPreference>
+
+<!--entries : 리스트에 표시되는 항목글씨 -->
+<!--entryValues : 파일에 저장되는값 -->
+
+</PreferenceScreen>
