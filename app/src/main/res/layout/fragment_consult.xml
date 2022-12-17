@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
+    <Button
+        android:id="@+id/btn_consult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="상담 신청하기"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="141dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_consult"
+        android:layout_width="409dp"
+        android:layout_height="816dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_consult" />
+=======
     <TextView
         android:id="@+id/textView"
         android:layout_width="416dp"
@@ -21,4 +38,5 @@
         android:gravity="center"/>
 
 
+>>>>>>> 4a8cd875a805554b35881081b89a04e389570e56
 </androidx.constraintlayout.widget.ConstraintLayout>

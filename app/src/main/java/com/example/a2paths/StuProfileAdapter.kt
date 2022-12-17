@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-
-
 class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : RecyclerView.Adapter<StuProfileAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -40,5 +38,4 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
         val grade = itemView.findViewById<TextView>(R.id.tv_grade)!!
         val state = itemView.findViewById<TextView>(R.id.tv_state)!!
     }
-
 }
