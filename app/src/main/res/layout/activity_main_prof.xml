@@ -8,17 +8,17 @@
     tools:context=".MainProfActivity">
 
     <FrameLayout
-        android:id="@+id/main_frame"
+        android:id="@+id/main_prof_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavi"
+        android:layout_above="@+id/bottomProfNavi"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavi"
+        android:id="@+id/bottomProfNavi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -9,8 +9,8 @@ import com.google.firebase.ktx.Firebase
 
 class MainProfActivity : AppCompatActivity() {
 //수정필요
-    private var mBinding: ActivityMainProfBinding? = null
-    private val binding get() = mBinding!!
+    private var mfBinding: ActivityMainProfBinding? = null
+    private val binding get() = mfBinding!!
 
     val firebase = Firebase.firestore
     private var mBackWait:Long = 0
@@ -18,29 +18,29 @@ class MainProfActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityMainProfBinding.inflate(layoutInflater)
+        mfBinding = ActivityMainProfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_frame, HomeFragment()).commit()
+        transaction.replace(R.id.main_prof_frame, HomeProfFragment()).commit()
 
-        binding.bottomNavi.setOnItemReselectedListener { item ->
+        binding.bottomProfNavi.setOnItemReselectedListener { item ->
             when (item.itemId) {
                 R.id.item_fragment1 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_frame, HomeFragment()).commit()
+                    transaction.replace(R.id.main_prof_frame, HomeProfFragment()).commit()
                 }
                 R.id.item_fragment2 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_frame, ChatFragment()).commit()
+                    transaction.replace(R.id.main_prof_frame, ChatFragment()).commit()
                 }
                 R.id.item_fragment3 -> { //수정필요
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_frame, ConsultFragment()).commit()
+                    transaction.replace(R.id.main_prof_frame, ConsultFragment()).commit()
                 }
                 R.id.item_fragment4 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_frame, SettingFragment()).commit()
+                    transaction.replace(R.id.main_prof_frame, SettingFragment()).commit()
                 }
             }
         }
@@ -56,7 +56,7 @@ class MainProfActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mBinding = null
+        mfBinding = null
         super.onDestroy()
     }
 }

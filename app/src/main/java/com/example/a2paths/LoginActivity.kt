@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     val firebase = Firebase.firestore
     private lateinit var auth: FirebaseAuth
     private val user = Firebase.auth.currentUser
+    private val prof = Firebase.auth.currentUser
 
     private var googleSignInClient: GoogleSignInClient? = null
     private var googleLoginCode = 9001
@@ -140,26 +141,29 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-   // 기본로그인
+
+    // 기본로그인
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     firebase.collection("user").document(user?.email.toString())
                         .get()
-                        .addOnSuccessListener {
-                            val intent = Intent(this, MainActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                        .addOnFailureListener {
-                            val intent = Intent(this, MainProfActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
+                        .addOnSuccessListener { document ->
+                            Toast.makeText(this, document["number"].toString(), Toast.LENGTH_SHORT).show()
+                            if (document["number"].toString() == null) {
+                                val intent = Intent(this, MainProfActivity::class.java)
+                                finishAffinity()
+                                startActivity(intent)
+                                Toast.makeText(this, "***  ***", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                val intent = Intent(this, MainActivity::class.java)
+                                finishAffinity()
+                                startActivity(intent)
+                                Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
                         }
                 } else {
                     Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()

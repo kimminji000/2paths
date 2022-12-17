@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class ProfProfileAdapter(private val profProfileList: ArrayList<ProfProfiles>) :
@@ -28,7 +29,7 @@ class ProfProfileAdapter(private val profProfileList: ArrayList<ProfProfiles>) :
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ProfProfileActivity::class.java)
             intent.putExtra("name", profProfileList[position].name)
-            ContextCompat.startActivity(holder.itemView.context, intent, null)
+            startActivity(holder.itemView.context, intent, null)
         }
     }
 
