@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<<<<<<< HEAD
     <Button
         android:id="@+id/btn_consult"
         android:layout_width="match_parent"
@@ -21,22 +20,5 @@
         android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_consult" />
-=======
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="416dp"
-        android:layout_height="78dp"
-        android:background="@color/orange3"
-        android:text="상 담"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
-        android:gravity="center"/>
 
-
->>>>>>> 4a8cd875a805554b35881081b89a04e389570e56
 </androidx.constraintlayout.widget.ConstraintLayout>
