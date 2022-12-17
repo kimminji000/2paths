@@ -34,9 +34,9 @@ class MainProfActivity : AppCompatActivity() {
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.main_prof_frame, ChatFragment()).commit()
                 }
-                R.id.item_fragment3 -> { //수정필요
+                R.id.item_fragment3 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_prof_frame, ConsultFragment()).commit()
+                    transaction.replace(R.id.main_prof_frame, ConsultProfFragment()).commit()
                 }
                 R.id.item_fragment4 -> {
                     val transaction = supportFragmentManager.beginTransaction()
