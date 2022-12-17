@@ -149,7 +149,6 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     firebase.collection("user").document(user?.email.toString())
                         .get()
-<<<<<<< HEAD
                         .addOnSuccessListener { document ->
                             Toast.makeText(this, document["number"].toString(), Toast.LENGTH_SHORT).show()
                             if (document["number"].toString() == null) {
@@ -165,30 +164,6 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                                 finish()
                             }
-=======
-                        .addOnSuccessListener {
-                            val intent = Intent(this, MainActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }/*
-                        .addOnFailureListener {
-                            val intent = Intent(this, MainProfActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }*/
-                    firebase.collection("prof").document(prof?.email.toString())
-                        .get()
-                        .addOnSuccessListener {
-                            val intent = Intent(this, MainProfActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
->>>>>>> 4a8cd875a805554b35881081b89a04e389570e56
                         }
                 } else {
                     Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()
