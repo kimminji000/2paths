@@ -30,7 +30,7 @@ class ProfProfileActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     for (i in task.result!!) {
-                        if (i.id == data.toString()) {
+                        if (i.data["name"] == data.toString()) {
                             val name = i.data["name"]
                             val office = i.data["office"]
                             val major = i.data["major"]

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_prof_nav"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="#DCDCDC"
+        android:padding="30dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_prof_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_prof_frame">
+
+        <ImageView
+            android:id="@+id/iv_profile2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/man" />
+
+        <TextView
+            android:id="@+id/tv_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_profile2"
+            app:layout_constraintStart_toStartOf="@+id/iv_profile2"
+            app:layout_constraintTop_toBottomOf="@+id/iv_profile2"
+            app:layout_constraintVertical_bias="0.115" />
+
+        <TextView
+            android:id="@+id/tv_office2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="연구실"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/iv_profile2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name2"
+            tools:ignore="MissingConstraints"/>
+
+        <TextView
+            android:id="@+id/tv_office"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="연구실"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_office2"
+            app:layout_constraintStart_toEndOf="@+id/tv_office2"
+            app:layout_constraintTop_toTopOf="@+id/tv_office2" />
+
+        <TextView
+            android:id="@+id/tv_major2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="연구분야"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_office2"
+            tools:ignore="MissingConstraints"/>
+
+        <TextView
+            android:id="@+id/tv_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="연구분야"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_major2"
+            app:layout_constraintTop_toTopOf="@+id/tv_major2" />
+
+        <TextView
+            android:id="@+id/tv_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="#ECECEC"
+            android:text="링크"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_major2"
+            tools:ignore="MissingConstraints"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_prof_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btn_prof2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/orange2"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="교수진"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/btn_stu2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/orange2"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="학생"
+            app:cornerRadius="0dp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/home_prof_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

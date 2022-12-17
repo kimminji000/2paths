@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     val firebase = Firebase.firestore
     private lateinit var auth: FirebaseAuth
     private val user = Firebase.auth.currentUser
+    private val prof = Firebase.auth.currentUser
 
     private var googleSignInClient: GoogleSignInClient? = null
     private var googleLoginCode = 9001
@@ -153,8 +154,17 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                             Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                             finish()
-                        }
+                        }/*
                         .addOnFailureListener {
+                            val intent = Intent(this, MainProfActivity::class.java)
+                            finishAffinity()
+                            startActivity(intent)
+                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }*/
+                    firebase.collection("prof").document(prof?.email.toString())
+                        .get()
+                        .addOnSuccessListener {
                             val intent = Intent(this, MainProfActivity::class.java)
                             finishAffinity()
                             startActivity(intent)
