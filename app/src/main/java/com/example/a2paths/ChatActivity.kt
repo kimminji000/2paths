@@ -1,5 +1,6 @@
 package com.example.a2paths
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -11,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import androidx.fragment.app.FragmentManager as FragmentManager
 
 class ChatActivity : AppCompatActivity() {
     private val fireDatabase = FirebaseDatabase.getInstance().reference
@@ -161,7 +160,7 @@ class ChatActivity : AppCompatActivity() {
 
         inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val textView_message: TextView = view.findViewById(R.id.tv_message)
-            val textView_name: TextView = view.findViewById(R.id.tv_name)
+            val textView_name: TextView = view.findViewById(R.id.tv_messageName)
             val layout_destination: LinearLayout = view.findViewById(R.id.messageItem_layout_destination)
             val layout_main: LinearLayout = view.findViewById(R.id.messageItem_linearlayout_main)
             val textView_time : TextView = view.findViewById(R.id.tv_time)
