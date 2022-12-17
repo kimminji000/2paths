@@ -150,12 +150,11 @@ class LoginActivity : AppCompatActivity() {
                     firebase.collection("user").document(user?.email.toString())
                         .get()
                         .addOnSuccessListener { document ->
-                            Toast.makeText(this, document["number"].toString(), Toast.LENGTH_SHORT).show()
-                            if (document["number"].toString() == null) {
+                            if (document["number"].toString() == "null") {
                                 val intent = Intent(this, MainProfActivity::class.java)
                                 finishAffinity()
                                 startActivity(intent)
-                                Toast.makeText(this, "***  ***", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                                 finish()
                             } else {
                                 val intent = Intent(this, MainActivity::class.java)
