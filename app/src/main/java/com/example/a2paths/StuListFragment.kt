@@ -24,11 +24,7 @@ class StuListFragment : Fragment() {
     private val filterAdapter = StuFilterAdapter(itemList)  //서치뷰 사용하는 경우의 필터 어댑터
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         mBinding = FragmentStuListBinding.inflate(inflater, container, false)
         // DB에서 학생 데이터 불러오기
@@ -69,9 +65,10 @@ class StuListFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
+
             // 서치뷰에 문자를 입력하거나 수정할 때 호출
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText != null){
+                if (newText != null) {
                     binding.rvStuprofile.adapter = filterAdapter   //필터 어댑터 연결
                     filterAdapter.getFilter().filter(newText)
                     Log.d(tagStuList, "SearchView Text is changed:$newText")
