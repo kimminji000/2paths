@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,6 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
-import com.example.a2paths.Message as Message
 
 class ChatFragment : Fragment() {
     companion object{
@@ -50,26 +48,27 @@ class ChatFragment : Fragment() {
     }
 
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>(){
+        private var destinationName = arguments?.getString("destinationName")
         private val chatList = ArrayList<ChatList>()
         private var uid : String? = null
-        private val receiverUser : ArrayList<String> = arrayListOf()
+        private val destinationUsers : ArrayList<String> = arrayListOf()
 
         init{
             uid = Firebase.auth.currentUser?.uid.toString()
-            // 불러오는 과정에서 데이터를 어떻게 가져오는게 좋을까나...
-            fireDatabase.child("chats").child("messages").orderByChild("sendId").equalTo(true)
-                .addValueEventListener(object :  ValueEventListener{
+            println(uid)
+
+            fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
-
                 override fun onDataChange(snapshot: DataSnapshot) {
                     chatList.clear()
-                    for (data in snapshot.children) {
+                    for(data in snapshot.children){
                         chatList.add(data.getValue<ChatList>()!!)
                         println(data)
                     }
                     notifyDataSetChanged()
                 }
+
             })
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -83,21 +82,20 @@ class ChatFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            var ReceiveruId: String? = null
+            var destinationUid: String? = null
             //채팅방에 있는 유저 모두 체크
             for (user in chatList[position].users.keys) {
                 if (user != uid) {
-                    ReceiveruId = user
-                    receiverUser.add(ReceiveruId)
+                    destinationUid = user
+                    destinationUsers.add(destinationUid)
                 }
             }
-            fireDatabase.child("receiverId").child("$ReceiveruId").addListenerForSingleValueEvent(object : ValueEventListener {
+            fireDatabase.child("users").child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val profile = snapshot.getValue<StuProfiles>()
-                    holder.textView_title.text = profile?.name
+                    holder.textView_title.text = destinationName.toString()
                 }
             })
             //메세지 내림차순 정렬 후 마지막 메세지의 키값을 가져
@@ -109,7 +107,7 @@ class ChatFragment : Fragment() {
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, ChatActivity::class.java)
-                intent.putExtra("uid", receiverUser[position])
+                intent.putExtra("destinationUid", destinationUsers[position])
                 context?.startActivity(intent)
             }
         }
