@@ -58,8 +58,8 @@ class StuProfileActivity : AppCompatActivity() {
 
                             binding.btnChat.setOnClickListener {
                                 val intent = Intent(this, ChatActivity::class.java)
-                                intent.putExtra("name", binding.tvName.text)
-                                intent.putExtra("uid", uid)
+                                intent.putExtra("destinationUid", uid)
+                                intent.putExtra("destinationName", i.data["name"].toString())
                                 startActivity(intent)
                             }
                             break
