@@ -28,6 +28,19 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="43dp"
+        android:layout_height="47dp"
+        android:layout_marginLeft="249dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_baseline_close_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
   </LinearLayout>
 
   <androidx.constraintlayout.widget.ConstraintLayout

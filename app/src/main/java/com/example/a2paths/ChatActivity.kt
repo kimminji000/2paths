@@ -86,6 +86,10 @@ class ChatActivity : AppCompatActivity() {
             }
         }
         checkChatRoom()
+
+        binding.imageButton.setOnClickListener{
+            onBackPressed()
+        }
     }
 
     private fun checkChatRoom() {

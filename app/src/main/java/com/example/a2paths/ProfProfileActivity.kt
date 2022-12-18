@@ -27,6 +27,10 @@ class ProfProfileActivity : AppCompatActivity() {
             intent.putExtra("prof", binding.tvName.text.toString())
             startActivity(intent)
         }
+
+        binding.btnBack.setOnClickListener{
+            onBackPressed()
+        }
     }
 
     private fun getProfile() {
