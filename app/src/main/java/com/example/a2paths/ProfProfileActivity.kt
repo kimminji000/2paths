@@ -1,5 +1,6 @@
 package com.example.a2paths
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.a2paths.databinding.ActivityProfProfileBinding
@@ -20,6 +21,12 @@ class ProfProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getProfile()
+
+        binding.btnConsult.setOnClickListener {
+            val intent = Intent(this, ConsultActivity::class.java)
+            intent.putExtra("prof", binding.tvName.text.toString())
+            startActivity(intent)
+        }
     }
 
     private fun getProfile() {

@@ -13,12 +13,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="141dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_consult"
-        android:layout_width="409dp"
-        android:layout_height="816dp"
-        android:layout_marginTop="1dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_consult" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_consult">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_consult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

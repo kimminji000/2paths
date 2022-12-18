@@ -13,17 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatFragment : Fragment() {
-    companion object{
-        fun newInstance() : ChatFragment {
-            return ChatFragment()
-        }
-    }
 
+    val firebase = Firebase.firestore
     private val fireDatabase = FirebaseDatabase.getInstance().reference
 
     //메모리에 올라갔을 때
@@ -47,38 +44,39 @@ class ChatFragment : Fragment() {
         return view
     }
 
-    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>(){
+    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>() {
         private var destinationName = arguments?.getString("destinationName")
         private val chatList = ArrayList<ChatList>()
-        private var uid : String? = null
-        private val destinationUsers : ArrayList<String> = arrayListOf()
+        private var uid: String? = null
+        private val destinationUsers: ArrayList<String> = arrayListOf()
 
-        init{
+        init {
             uid = Firebase.auth.currentUser?.uid.toString()
             println(uid)
 
-            fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    chatList.clear()
-                    for(data in snapshot.children){
-                        chatList.add(data.getValue<ChatList>()!!)
-                        println(data)
+            fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
                     }
-                    notifyDataSetChanged()
-                }
 
-            })
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        chatList.clear()
+                        for (data in snapshot.children) {
+                            chatList.add(data.getValue<ChatList>()!!)
+                            println(data)
+                        }
+                        notifyDataSetChanged()
+                    }
+                })
         }
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
 
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.chat_item, parent, false))
         }
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val textView_title : TextView = itemView.findViewById(R.id.tv_chat_title)
-            val textView_lastMessage : TextView = itemView.findViewById(R.id.tv_lastmessaging)
+            val textView_title: TextView = itemView.findViewById(R.id.tv_chat_title)
+            val textView_lastMessage: TextView = itemView.findViewById(R.id.tv_lastmessaging)
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -90,14 +88,17 @@ class ChatFragment : Fragment() {
                     destinationUsers.add(destinationUid)
                 }
             }
-            fireDatabase.child("users").child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
+
+            firebase.collection("user")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        if (document["uid"] == destinationUid.toString()) {
+                            holder.textView_title.text = document["name"].toString()
+                        }
+                    }
                 }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    holder.textView_title.text = destinationName.toString()
-                }
-            })
             //메세지 내림차순 정렬 후 마지막 메세지의 키값을 가져
             val commentMap = TreeMap<String, ChatList.Comment>(reverseOrder())
             commentMap.putAll(chatList[position].comments)
@@ -116,7 +117,6 @@ class ChatFragment : Fragment() {
             return chatList.size
         }
     }
-
 }
 
 

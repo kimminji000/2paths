@@ -175,8 +175,7 @@ class RegisterActivity : AppCompatActivity() {
                                 val data = hashMapOf(
                                     "uid" to user!!.uid,
                                 )
-                                firebase.collection("user").document(user.email.toString())
-                                    .set(data, SetOptions.merge())
+                                firebase.collection("user").document(user.email.toString()).set(data, SetOptions.merge())
                             }
                         }
 
