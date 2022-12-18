@@ -27,6 +27,7 @@ class ChatActivity : AppCompatActivity() {
     private val fireDatabase = FirebaseDatabase.getInstance().reference
     private var chatRoomUid : String? = null
     private var destinationUid : String? = null
+    private var destinationName : String? = null
     private var uid : String? = null
     private var recyclerView : RecyclerView? = null
 
@@ -43,6 +44,7 @@ class ChatActivity : AppCompatActivity() {
         val curTime = dateFormat.format(Date(time)).toString()
 
         destinationUid = intent.getStringExtra("destinationUid")
+        destinationName = intent.getStringExtra("destinationName")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.rv_chatActivity)
 
@@ -53,7 +55,7 @@ class ChatActivity : AppCompatActivity() {
             chatList.users.put(uid.toString(), true)
             chatList.users.put(destinationUid!!, true)
 
-            val comment = ChatList.Comment(uid, messageInput.text.toString(), curTime)
+            val comment = ChatList.Comment(destinationName.toString(), uid, messageInput.text.toString(), curTime)
             if(chatRoomUid == null){
                 send.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatList).addOnSuccessListener {
@@ -106,9 +108,12 @@ class ChatActivity : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                 }
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    stuProfiles = snapshot.getValue<StuProfiles>()
-                    tv_topName.text = stuProfiles?.name
+                    tv_topName.text = destinationName
                     getMessageList()
+                    val ChatFragment = ChatFragment()
+                    val bundle = Bundle()
+                    bundle.putString("destinationName", destinationName)
+                    ChatFragment.arguments = bundle
 
 
                 }

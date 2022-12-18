@@ -48,10 +48,10 @@ class ChatFragment : Fragment() {
     }
 
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>(){
-        private var destinationName = arguments?.getString("destinationName")
         private val chatList = ArrayList<ChatList>()
         private var uid : String? = null
         private val destinationUsers : ArrayList<String> = arrayListOf()
+        val destinationName = arguments?.getString("destinationName")
 
         init{
             uid = Firebase.auth.currentUser?.uid.toString()
@@ -95,7 +95,7 @@ class ChatFragment : Fragment() {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    holder.textView_title.text = destinationName.toString()
+                    holder.textView_title.text = destinationName
                 }
             })
             //메세지 내림차순 정렬 후 마지막 메세지의 키값을 가져
