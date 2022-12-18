@@ -58,16 +58,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.tvPassword.setOnClickListener {
-            Toast.makeText(this, "지원예정중인 기능입니다.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, FindPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         binding.tvRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.tvProf.setOnClickListener {
-            val intent = Intent(this, RegisterProfActivity::class.java)
             startActivity(intent)
         }
 

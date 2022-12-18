@@ -23,6 +23,12 @@
         android:entryValues="@array/theme">
     </ListPreference>
 
+    <PreferenceScreen
+        android:key="logout"
+        android:title="로그아웃"
+        android:entryValues="@array/theme">
+    </PreferenceScreen>
+
 <!--entries : 리스트에 표시되는 항목글씨 -->
 <!--entryValues : 파일에 저장되는값 -->
 

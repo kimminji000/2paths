@@ -30,6 +30,7 @@ class ChatActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     private val fireDatabase = FirebaseDatabase.getInstance().reference
+
     val firebase = Firebase.firestore
     private var chatRoomUid: String? = null
     private var destinationUid: String? = null
@@ -52,6 +53,7 @@ class ChatActivity : AppCompatActivity() {
         val curTime = dateFormat.format(Date(time)).toString()
 
         destinationUid = intent.getStringExtra("destinationUid")
+        destinationName = intent.getStringExtra("destinationName")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.rv_chatActivity)
 
@@ -62,8 +64,10 @@ class ChatActivity : AppCompatActivity() {
             chatList.users.put(uid.toString(), true)
             chatList.users.put(destinationUid!!, true)
 
+
             val comment = ChatList.Comment(uid, messageInput.text.toString(), curTime)
             if (chatRoomUid == null) {
+
                 send.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatList).addOnSuccessListener {
                     //채팅방 생성

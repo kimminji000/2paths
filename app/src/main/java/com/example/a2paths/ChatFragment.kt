@@ -44,6 +44,7 @@ class ChatFragment : Fragment() {
         return view
     }
 
+
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>() {
         private var destinationName = arguments?.getString("destinationName")
         private val chatList = ArrayList<ChatList>()
