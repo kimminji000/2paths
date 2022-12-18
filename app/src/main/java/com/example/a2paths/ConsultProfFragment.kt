@@ -44,7 +44,8 @@ class ConsultProfFragment : Fragment() {
                                             document["group"] as String,
                                             document["day"] as String,
                                             document["time"] as String,
-                                            document["detail"] as String
+                                            document["detail"] as String,
+                                            document["state"] as String
                                         )
                                         itemList.add(item)
                                     }

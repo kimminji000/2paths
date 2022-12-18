@@ -10,7 +10,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
 class HomeProfFragment : Fragment() {
 
     private var mfBinding: FragmentHomeProfBinding? = null
@@ -21,6 +20,7 @@ class HomeProfFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         mfBinding = FragmentHomeProfBinding.inflate(inflater, container, false)
 
         getProfMyProfile()

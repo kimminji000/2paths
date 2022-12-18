@@ -29,11 +29,21 @@ class ConsultFragment : Fragment() {
 
         mBinding = FragmentConsultBinding.inflate(inflater, container, false)
 
+        binding.rvConsult.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvConsult.setHasFixedSize(true)
+        binding.rvConsult.adapter = adapter
+
         binding.btnConsult.setOnClickListener {
             val intent = Intent(context, ConsultActivity::class.java)
             startActivity(intent)
         }
 
+        getConsultList()
+
+        return binding.root
+    }
+
+    private fun getConsultList() {
         firebase.collection("consult")
             .get()
             .addOnSuccessListener { result ->
@@ -45,18 +55,13 @@ class ConsultFragment : Fragment() {
                             document["group"] as String,
                             document["day"] as String,
                             document["time"] as String,
-                            document["detail"] as String
+                            document["detail"] as String,
+                            document["state"] as String,
                         )
                         itemList.add(item)
                     }
                 }
                 adapter.notifyDataSetChanged()
             }
-
-        binding.rvConsult.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvConsult.setHasFixedSize(true)
-        binding.rvConsult.adapter = adapter
-
-        return binding.root
     }
 }
