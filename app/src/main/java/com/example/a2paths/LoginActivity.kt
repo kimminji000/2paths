@@ -66,10 +66,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.tvProf.setOnClickListener {
-            val intent = Intent(this, RegisterProfActivity::class.java)
-            startActivity(intent)
-        }
+
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -162,6 +159,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                             finish()
                         }*/
+                    /*
                     firebase.collection("prof").document(prof?.email.toString())
                         .get()
                         .addOnSuccessListener {
@@ -170,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                             Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
                             finish()
-                        }
+                        }*/
                 } else {
                     Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()
                     Log.d("Login", "Error:${task.exception}")

@@ -23,6 +23,7 @@
         android:entryValues="@array/theme">
     </ListPreference>
 
+
 <!--entries : 리스트에 표시되는 항목글씨 -->
 <!--entryValues : 파일에 저장되는값 -->
 

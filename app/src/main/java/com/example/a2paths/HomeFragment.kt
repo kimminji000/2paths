@@ -1,6 +1,8 @@
 package com.example.a2paths
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.a2paths.databinding.FragmentHomeBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.io.ByteArrayInputStream
+import kotlin.experimental.or
 
 class HomeFragment : Fragment() {
 
@@ -24,6 +29,7 @@ class HomeFragment : Fragment() {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         getMyProfile()
+        imageDownload()
 
         binding.constraintLayout2.setOnClickListener {
             val intent = Intent(activity, MyProfileActivity::class.java)
@@ -65,6 +71,66 @@ class HomeFragment : Fragment() {
                 }
                 binding.tvField.text = field
             }
+    }
+
+    private fun imageDownload() {
+
+        firebase.collection("user").document(user?.email.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                val image : String = document["image"].toString()
+                val b: ByteArray = binaryStringToByteArray(image)
+                val stream = ByteArrayInputStream(b)
+                val down_image = Drawable.createFromStream(stream, "image")
+
+                binding.ivProfile.setImageDrawable(down_image)
+                }
+
+
+        /*
+        var databaseRef : DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("/images")
+
+        databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot: DataSnapshot in snapshot.children){
+                    val image: String = dataSnapshot.getValue().toString()
+
+                    val b: ByteArray = binaryStringToByteArray(image)
+                    val stream = ByteArrayInputStream(b)
+                    val down_image = Drawable.createFromStream(stream,"image")
+                    binding.ivProfile.setImageDrawable(down_image)
+                }
+            }
+        })*/
+    }
+
+    private fun binaryStringToByteArray(s : String)  :ByteArray {
+        val count : Int = s.length / 8
+        val b = ByteArray(count)
+
+        for(i in 1 until count) {
+            val t = s.substring((i-1)*8, i*8)
+            b[i-1] = binaryStringToByte(t)
+        }
+        return b
+    }
+
+    private fun binaryStringToByte(s:String) : Byte {
+        var ret : Byte
+        var total  : Byte = 0
+
+        for(i in 0 until 8) {
+            ret = if(s.get(7-i)=='1')
+                (1.shl(i)).toByte()
+            else 0
+            total = (ret.or(total))
+        }
+        return total
     }
 
     override fun onDestroyView() {
