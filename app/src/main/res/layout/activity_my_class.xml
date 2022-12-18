@@ -20,7 +20,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_class"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,28 +32,23 @@
         android:id="@+id/et_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:hint="추가할 과목명을 입력하세요"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_add"
-        app:layout_constraintStart_toStartOf="@+id/rv_class" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:text="추가"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_class" />
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="삭제"
-        app:layout_constraintStart_toEndOf="@+id/btn_add"
-        app:layout_constraintTop_toTopOf="@+id/btn_add" />
+        app:layout_constraintStart_toEndOf="@+id/et_class" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

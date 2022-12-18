@@ -14,8 +14,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class LoginActivity : AppCompatActivity() {
@@ -58,15 +60,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.tvPassword.setOnClickListener {
-            Toast.makeText(this, "지원예정중인 기능입니다.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, FindPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         binding.tvRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -138,37 +139,29 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-   // 기본로그인
+
+    // 기본로그인
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     firebase.collection("user").document(user?.email.toString())
                         .get()
-                        .addOnSuccessListener {
-                            val intent = Intent(this, MainActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }/*
-                        .addOnFailureListener {
-                            val intent = Intent(this, MainProfActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }*/
-                    /*
-                    firebase.collection("prof").document(prof?.email.toString())
-                        .get()
-                        .addOnSuccessListener {
-                            val intent = Intent(this, MainProfActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                            Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }*/
+                        .addOnSuccessListener { document ->
+                            if (document["number"].toString() == "null") {
+                                val intent = Intent(this, MainProfActivity::class.java)
+                                finishAffinity()
+                                startActivity(intent)
+                                Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                val intent = Intent(this, MainActivity::class.java)
+                                finishAffinity()
+                                startActivity(intent)
+                                Toast.makeText(this, "*** Welcome ***", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                        }
                 } else {
                     Toast.makeText(baseContext, "로그인 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show()
                     Log.d("Login", "Error:${task.exception}")

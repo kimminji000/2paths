@@ -51,15 +51,13 @@ class StuProfileActivity : AppCompatActivity() {
 
                             binding.btnClass.setOnClickListener {
                                 val intent = Intent(this, ClassActivity::class.java)
-                                Toast.makeText(this, email, Toast.LENGTH_SHORT).show()
                                 intent.putExtra("email", email)
                                 startActivity(intent)
                             }
 
                             binding.btnChat.setOnClickListener {
                                 val intent = Intent(this, ChatActivity::class.java)
-                                intent.putExtra("name", binding.tvName.text)
-                                intent.putExtra("uid", uid)
+                                intent.putExtra("destinationUid", uid)
                                 startActivity(intent)
                             }
                             break
