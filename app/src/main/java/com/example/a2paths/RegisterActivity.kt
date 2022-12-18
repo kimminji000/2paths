@@ -161,6 +161,9 @@ class RegisterActivity : AppCompatActivity() {
             firebase.collection("user").document(email).set(data)
             signUp(email, password)
         }
+        binding.imageButton2.setOnClickListener{
+            onBackPressed()
+        }
     }
 
     private fun signUp(email: String, password: String) { //학생 회원가입
