@@ -53,7 +53,6 @@ class ChatActivity : AppCompatActivity() {
         val curTime = dateFormat.format(Date(time)).toString()
 
         destinationUid = intent.getStringExtra("destinationUid")
-        destinationName = intent.getStringExtra("destinationName")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.rv_chatActivity)
 
