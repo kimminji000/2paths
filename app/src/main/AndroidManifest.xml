@@ -46,13 +46,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterProfActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MainProfActivity"
             android:exported="false">
             <meta-data

@@ -9,8 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class ProfProfileAdapter(private val profProfileList: ArrayList<ProfProfiles>) :
-    RecyclerView.Adapter<ProfProfileAdapter.CustomViewHolder>() {
+class ProfProfileAdapter(private val profProfileList: ArrayList<ProfProfiles>) : RecyclerView.Adapter<ProfProfileAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.prof_item, parent, false)
