@@ -66,6 +66,8 @@
             android:layout_width="236dp"
             android:layout_height="50dp"
             android:text="로그인"
+            android:textStyle="bold"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="@+id/cb_login"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/cb_login"

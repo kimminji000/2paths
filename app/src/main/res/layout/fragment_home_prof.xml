@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="#DCDCDC"
+        android:background="#F0F0F0"
         android:padding="30dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bottom_prof_nav"
@@ -115,10 +115,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
+            android:background="@drawable/edit_background"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="교수진"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:cornerRadius="0dp" />
 
         <Button
@@ -126,11 +128,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
+            android:background="@drawable/edit_background"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="학생"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:cornerRadius="0dp" />
     </LinearLayout>
 
