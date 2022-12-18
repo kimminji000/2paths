@@ -3,6 +3,7 @@ package com.example.a2paths
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         getMyProfile()
-        imageDownload()
+        //imageDownload()
 
         binding.constraintLayout2.setOnClickListener {
             val intent = Intent(activity, MyProfileActivity::class.java)
@@ -72,7 +73,7 @@ class HomeFragment : Fragment() {
                 binding.tvField.text = field
             }
     }
-
+    /*
     private fun imageDownload() {
 
         firebase.collection("user").document(user?.email.toString())
@@ -81,13 +82,13 @@ class HomeFragment : Fragment() {
                 val image : String = document["image"].toString()
                 val b: ByteArray = binaryStringToByteArray(image)
                 val stream = ByteArrayInputStream(b)
-                val down_image = Drawable.createFromStream(stream, "image")
+                val downImage = Drawable.createFromStream(stream, "image")
 
-                binding.ivProfile.setImageDrawable(down_image)
+                binding.ivProfile.setImageDrawable(downImage)
                 }
 
 
-        /*
+
         var databaseRef : DatabaseReference =
             FirebaseDatabase.getInstance().getReference("/images")
 
@@ -106,9 +107,9 @@ class HomeFragment : Fragment() {
                     binding.ivProfile.setImageDrawable(down_image)
                 }
             }
-        })*/
-    }
-
+        })
+    }*/
+    /*
     private fun binaryStringToByteArray(s : String)  :ByteArray {
         val count : Int = s.length / 8
         val b = ByteArray(count)
@@ -136,5 +137,5 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()
-    }
+    }*/
 }

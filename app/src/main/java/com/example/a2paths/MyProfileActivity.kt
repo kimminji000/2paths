@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.widget.Toast
+import androidx.appcompat.graphics.drawable.DrawableWrapper
 import androidx.core.app.ActivityCompat
 import com.example.a2paths.databinding.ActivityMyProfileBinding
 import com.google.firebase.auth.ktx.auth
@@ -40,18 +41,18 @@ class MyProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
+        //ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
 
 
         getProfile()
+        //imageDownload()
 
         binding.btnClass.setOnClickListener {
             val intent = Intent(this, MyClassActivity::class.java)
             startActivity(intent)
         }
         binding.btnAcImage.setOnClickListener {
-            fromGallery()
-            imageUpload()
+            //fromGallery()
         }
 
         binding.btnSave.setOnClickListener {
@@ -106,12 +107,15 @@ class MyProfileActivity : AppCompatActivity() {
 
         firebase.collection("user").document(user?.email.toString()).set(data, SetOptions.merge())
     }
+}
 
-    private fun imageUpload() {
+    /*
+    private fun imageUpload(uri: Drawable?) {
         var databaseRef : DatabaseReference = FirebaseDatabase.getInstance().reference
 
-        val image : Drawable = binding.ivProfile.drawable
-        val bitmap : Bitmap = (image as BitmapDrawable).bitmap
+        //val image : Drawable = binding.ivProfile.drawable
+
+        val bitmap : Bitmap = (uri as BitmapDrawable?)?.bitmap!!
 
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
@@ -129,7 +133,6 @@ class MyProfileActivity : AppCompatActivity() {
         )
 
         firebase.collection("user").document(user?.email.toString()).set(data, SetOptions.merge())
-
     }
 
     private fun byteArrayToBinaryString(b: ByteArray) : StringBuilder {
@@ -150,6 +153,8 @@ class MyProfileActivity : AppCompatActivity() {
         }
         return sb.toString()
     }
+
+
     private fun fromGallery(){
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
@@ -163,6 +168,9 @@ class MyProfileActivity : AppCompatActivity() {
                 REQ_STORAGE -> {
                     data?.data?.let { uri ->
                         binding.ivProfile.setImageURI(uri)
+                        val imageUri: Drawable? = DrawableWrapper.createFromPath(uri.toString())
+                        imageUpload(imageUri)
+
                     }
                 }
             }
@@ -170,6 +178,17 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     private fun imageDownload() {
+        firebase.collection("user").document(user?.email.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                val image : String = document["image"].toString()
+                val b: ByteArray = binaryStringToByteArray(image)
+                val stream = ByteArrayInputStream(b)
+                val downImage = Drawable.createFromStream(stream, "image")
+
+                binding.ivProfile.setImageDrawable(downImage)
+            }
+
         var databaseRef : DatabaseReference =
             FirebaseDatabase.getInstance().getReference("/images")
 
@@ -213,5 +232,4 @@ class MyProfileActivity : AppCompatActivity() {
             total = (ret.or(total))
         }
         return total
-    }
-}
+    }*/
