@@ -23,6 +23,8 @@ class ConsultStuAdapter(private val consultStuList: ArrayList<ConsultStu>) : Rec
         holder.day.text = consultStuList[position].day
         holder.time.text = consultStuList[position].time
         holder.detail.text = consultStuList[position].detail
+        holder.state.text = consultStuList[position].state
+
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,5 +33,6 @@ class ConsultStuAdapter(private val consultStuList: ArrayList<ConsultStu>) : Rec
         val day = itemView.findViewById<TextView>(R.id.tv_day)!!
         val time = itemView.findViewById<TextView>(R.id.tv_time)!!
         val detail = itemView.findViewById<TextView>(R.id.tv_detail)!!
+        val state = itemView.findViewById<TextView>(R.id.tv_state)!!
     }
 }

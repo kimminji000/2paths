@@ -33,7 +33,6 @@ class ProfListFragment : Fragment() {
             .addOnSuccessListener { result ->
                 itemList.clear()
                 for (document in result) {
-                    //val item = ProfProfiles(document["name"] as String, document["office"] as String, document["major"] as String)
                     if (document["id"] == prof?.email) continue
                     val item = ProfProfiles(
                         document["name"] as String,

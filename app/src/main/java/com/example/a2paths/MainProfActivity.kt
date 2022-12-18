@@ -31,8 +31,7 @@ class MainProfActivity : AppCompatActivity() {
                     transaction.replace(R.id.main_prof_frame, HomeProfFragment()).commit()
                 }
                 R.id.item_fragment2 -> {
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.main_prof_frame, ChatFragment()).commit()
+                    Toast.makeText(this, "교수님은 채팅 기능을 사용할 수 없습니다", Toast.LENGTH_SHORT).show()
                 }
                 R.id.item_fragment3 -> {
                     val transaction = supportFragmentManager.beginTransaction()

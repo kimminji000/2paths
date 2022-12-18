@@ -51,7 +51,6 @@ class StuProfileActivity : AppCompatActivity() {
 
                             binding.btnClass.setOnClickListener {
                                 val intent = Intent(this, ClassActivity::class.java)
-                                Toast.makeText(this, email, Toast.LENGTH_SHORT).show()
                                 intent.putExtra("email", email)
                                 startActivity(intent)
                             }
