@@ -24,8 +24,9 @@ class MyClassActivity : AppCompatActivity() {
     private val itemList = arrayListOf<ClassName>()
     private val adapter = ClassAdapter(itemList)
 
+    val mContext = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 
         mBinding = ActivityMyClassBinding.inflate(layoutInflater)
@@ -51,10 +52,6 @@ class MyClassActivity : AppCompatActivity() {
 
             getClass()
         }
-
-        binding.btnDelete.setOnClickListener {
-
-        }
     }
 
     inner class ClassAdapter(private val className: ArrayList<ClassName>) : RecyclerView.Adapter<ClassAdapter.CustomViewHolder>() {
@@ -75,10 +72,16 @@ class MyClassActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             holder.name.text = className[position].name
 
+            var mDeleteWait: Long = 0
             holder.itemView.setOnClickListener {
-                //className[position].name
-                //Toast.makeText(this, "수강과목이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                //notifyItemRemoved(position)
+                if (System.currentTimeMillis() - mDeleteWait >= 2000) {
+                    mDeleteWait = System.currentTimeMillis()
+                    Toast.makeText(mContext, "과목명을 한번 더 누르면 삭제됩니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    firebase.collection(user?.email.toString()).document(className[position].name.toString()).delete()
+                    Toast.makeText(mContext, "수강과목이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    getClass()
+                }
             }
         }
     }
