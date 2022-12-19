@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="4dp"
+        android:background="@color/orange3"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,12 +40,21 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <ImageView
+            android:layout_width="350dp"
+            android:layout_height="400dp"
+            android:src="@drawable/logo2_2paths"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="40dp" />
+
+
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
+            android:background="@drawable/edit_background"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -56,8 +66,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/orange2"
+            android:background="@drawable/edit_background"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
