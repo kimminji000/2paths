@@ -44,7 +44,7 @@ class StuFilterAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Rec
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.name.text = filteredStuProfileList[position].name
-        holder.number.text = filteredStuProfileList[position].number.substring(0 until 2)
+        holder.number.text = filteredStuProfileList[position].number.substring(2 until 4)
         holder.grade.text = filteredStuProfileList[position].grade
         holder.state.text = filteredStuProfileList[position].state
 
