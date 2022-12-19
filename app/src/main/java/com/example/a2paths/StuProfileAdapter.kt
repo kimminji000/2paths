@@ -21,7 +21,7 @@ class StuProfileAdapter(private val stuProfileList: ArrayList<StuProfiles>) : Re
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.name.text = stuProfileList[position].name
-        holder.number.text = stuProfileList[position].number.substring(0 until 2)
+        holder.number.text = stuProfileList[position].number.substring(2 until 4)
         holder.grade.text = stuProfileList[position].grade
         holder.state.text = stuProfileList[position].state
 

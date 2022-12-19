@@ -31,7 +31,7 @@ class StuProfileActivity : AppCompatActivity() {
                         if (i.data["number"] == data.toString()) {
                             binding.tvName.text = i.data["name"].toString()
                             binding.tvGrade.text = i.data["grade"].toString()
-                            binding.tvNumber.text = i.data["number"].toString().substring(0 until 2)
+                            binding.tvNumber.text = i.data["number"].toString().substring(2 until 4)
                             binding.tvState.text = i.data["state"].toString()
                             val email = i.data["id"].toString()
                             val uid = i.data["uid"].toString()
